@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unni Aditya Mohan — Mechanical & Robotics Engineer</title>
+  <meta name="description" content="Portfolio of Unni Aditya Mohan — Robotics Engineer, MS Robotics at Northeastern University. Multi-robot systems, ROS2, SLAM, controls, vision-guided manipulation, with a strong mechanical simulation background.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-deep:    #0c0c14;
+      --bg-surface: #111119;
+      --bg-card:    #1a1a2a;
+      --bg-card-hover: #21213a;
+      --accent:     #c78c3c;
+      --accent-dim: #a06e28;
+      --accent-glow: rgba(199, 140, 60, 0.12);
+      --accent-soft: rgba(199, 140, 60, 0.06);
+      --text-primary: #e8e4de;
+      --text-secondary: #9a9aac;
+      --text-muted:  #5e5e72;
+      --border:      #2a2a3e;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body:    'Inter', sans-serif;
+      --font-mono:    'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #dba04e; }
+    ::selection { background: var(--accent); color: var(--bg-deep); }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(12, 12, 20, 0.88);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      height: 64px;
+    }
+    .nav-logo {
+      font-family: var(--font-display); font-weight: 700; font-size: 1.1rem;
+      color: var(--text-primary); letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+      letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      flex-direction: column; gap: 5px; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px; background: var(--text-primary); transition: all 0.3s;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 120px 2rem 80px; position: relative; overflow: hidden;
+    }
+    /* Blurred background image */
+    .hero-bg {
+      position: absolute; inset: -20px; z-index: 0;
+      background: url('assets/images/background/bg_image.jpg') center / cover no-repeat;
+      opacity: 0.15;
+      filter: blur(6px) saturate(0.4) brightness(0.7);
+      pointer-events: none;
+      transform: scale(1.05);
+    }
+    /* Dark overlay for text readability */
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(135deg, rgba(12,12,20,0.92) 0%, rgba(12,12,20,0.7) 50%, rgba(12,12,20,0.85) 100%);
+      pointer-events: none;
+    }
+    /* Blueprint grid overlay */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 1;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(42,42,62,0.15) 59px, rgba(42,42,62,0.15) 60px),
+        repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(42,42,62,0.15) 59px, rgba(42,42,62,0.15) 60px);
+      pointer-events: none;
+    }
+    /* Warm glow top-right */
+    .hero::after {
+      content: '';
+      position: absolute; top: -200px; right: -200px; z-index: 1;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    /* Second glow bottom-left */
+    .hero-glow-2 {
+      position: absolute; bottom: -150px; left: -150px; z-index: 1;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(60,80,199,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    /* Floating particles canvas */
+    #hero-particles {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    }
+    .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+    .hero-eyebrow {
+      font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent);
+      letter-spacing: 0.08em; margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 32px; height: 1px; background: var(--accent);
+    }
+    .hero h1 {
+      font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 700; line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero h1 .accent { color: var(--accent); }
+    .hero-desc {
+      font-size: 1.05rem; color: var(--text-secondary); max-width: 580px;
+      line-height: 1.75; margin-bottom: 2.5rem;
+    }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.75rem; border-radius: 6px;
+      font-family: var(--font-body); font-size: 0.9rem; font-weight: 500;
+      letter-spacing: 0.02em; cursor: pointer; transition: all 0.25s; border: none;
+    }
+    .btn-primary { background: var(--accent); color: var(--bg-deep); }
+    .btn-primary:hover { background: #dba04e; color: var(--bg-deep); transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Sections ── */
+    section { padding: 100px 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent);
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 600; letter-spacing: -0.02em; margin-bottom: 1rem;
+    }
+    .section-desc { color: var(--text-secondary); max-width: 600px; margin-bottom: 3rem; }
+
+    /* ── About ── */
+    #about { background: var(--bg-surface); position: relative; overflow: hidden; }
+    #about::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('assets/images/effi-cycle/cad-topview.png') center / cover no-repeat;
+      opacity: 0.03; filter: saturate(0);
+      pointer-events: none;
+    }
+    #about .section-inner { position: relative; z-index: 1; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .about-left { display: flex; flex-direction: column; gap: 2rem; }
+    .profile-pic {
+      width: 180px; height: 180px; border-radius: 12px; overflow: hidden;
+      border: 2px solid var(--border); flex-shrink: 0;
+    }
+    .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
+    .about-text p { color: var(--text-secondary); margin-bottom: 1.25rem; line-height: 1.8; }
+    .about-text p strong { color: var(--text-primary); font-weight: 500; }
+    .edu-cards { display: flex; flex-direction: column; gap: 1.25rem; }
+    .edu-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.5rem; transition: border-color 0.3s;
+    }
+    .edu-card:hover { border-color: var(--accent-dim); }
+    .edu-degree { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; margin-bottom: 0.25rem; }
+    .edu-school { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.35rem; }
+    .edu-meta {
+      font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);
+      display: flex; gap: 1rem;
+    }
+    .edu-meta .gpa { color: var(--accent); }
+
+    /* ── Skills ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .skill-category {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.75rem; transition: border-color 0.3s;
+    }
+    .skill-category:hover { border-color: var(--accent-dim); }
+    .skill-icon {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: var(--accent-glow); border: 1px solid rgba(199,140,60,0.2);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem; font-size: 1.1rem;
+    }
+    .skill-cat-title { font-family: var(--font-display); font-weight: 600; font-size: 1rem; margin-bottom: 0.75rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .skill-tag {
+      font-size: 0.75rem; padding: 0.3rem 0.65rem; border-radius: 4px;
+      background: var(--bg-deep); color: var(--text-secondary);
+      border: 1px solid var(--border); font-family: var(--font-mono);
+    }
+
+    /* ── Projects ── */
+    #projects { background: var(--bg-surface); position: relative; overflow: hidden; }
+    #projects::before {
+      content: '';
+      position: absolute; top: 0; right: 0; bottom: 0; left: 50%;
+      background: url('assets/images/effi-cycle/stress.png') right center / cover no-repeat;
+      opacity: 0.035; filter: saturate(0) brightness(1.3);
+      pointer-events: none;
+    }
+    #projects .section-inner { position: relative; z-index: 1; }
+
+    .featured-project {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin-bottom: 2rem;
+    }
+    .featured-header {
+      padding: 2.5rem 2.5rem 0;
+      display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;
+    }
+    .featured-label {
+      font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .featured-title {
+      font-family: var(--font-display); font-size: 1.6rem; font-weight: 600;
+      letter-spacing: -0.01em; margin-bottom: 0.5rem;
+    }
+    .featured-subtitle { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.75rem; }
+    .featured-date {
+      font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);
+      background: var(--bg-deep); padding: 0.35rem 0.75rem; border-radius: 4px;
+      white-space: nowrap; height: fit-content;
+    }
+    .featured-desc {
+      padding: 1rem 2.5rem; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.75;
+      max-width: 700px;
+    }
+    .featured-tech { padding: 0 2.5rem 1.5rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    .project-gallery {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+      margin: 0 2.5rem 2.5rem; border-radius: 8px; overflow: hidden;
+    }
+    .gallery-item {
+      position: relative; overflow: hidden; aspect-ratio: 4/3;
+      cursor: pointer; background: #0a0a12;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%; object-fit: contain; background: #0a0a12;
+      transition: transform 0.3s;
+    }
+    .gallery-item:hover img { transform: scale(1.03); }
+    .gallery-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.85));
+      padding: 2rem 0.75rem 0.6rem;
+      font-size: 0.72rem; color: rgba(255,255,255,0.85);
+      font-family: var(--font-mono); letter-spacing: 0.02em;
+    }
+
+    .results-section {
+      margin: 0 2.5rem 2.5rem;
+      background: var(--bg-deep); border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .results-title { padding: 1.25rem 1.5rem 0; font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; }
+    .results-subtitle { padding: 0.25rem 1.5rem 1rem; font-size: 0.8rem; color: var(--text-muted); }
+    .results-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .results-table th {
+      text-align: left; padding: 0.7rem 1rem;
+      font-family: var(--font-mono); font-weight: 500; font-size: 0.72rem;
+      color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.2);
+    }
+    .results-table td { padding: 0.65rem 1rem; border-bottom: 1px solid rgba(42,42,62,0.5); color: var(--text-secondary); }
+    .results-table tr:last-child td { border-bottom: none; }
+    .results-table td:first-child { color: var(--text-primary); font-weight: 500; }
+    .pass { color: #5cb85c; font-family: var(--font-mono); font-weight: 500; }
+
+    /* Video embed */
+    .project-video {
+      margin: 0 2.5rem 1.5rem; border-radius: 8px; overflow: hidden;
+      background: #0a0a12; border: 1px solid var(--border);
+    }
+    .project-video video,
+    .project-video iframe {
+      width: 100%; display: block; aspect-ratio: 16/9; border: none;
+    }
+
+    /* Project links bar */
+    .project-actions {
+      padding: 0 2.5rem 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap;
+    }
+    .project-link {
+      font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.5rem 1rem; border-radius: 6px;
+      border: 1px solid var(--border); transition: all 0.2s;
+    }
+    .project-link:hover { border-color: var(--accent); color: var(--accent); }
+    .project-link svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    /* Upcoming */
+    .upcoming-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
+    .upcoming-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.75rem; transition: border-color 0.3s;
+    }
+    .upcoming-card:hover { border-color: var(--accent-dim); }
+    .upcoming-type {
+      font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem;
+    }
+    .upcoming-title { font-family: var(--font-display); font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; }
+    .upcoming-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+    .upcoming-status {
+      display: inline-block; margin-top: 0.75rem;
+      font-family: var(--font-mono); font-size: 0.7rem;
+      padding: 0.25rem 0.6rem; border-radius: 3px;
+      border: 1px dashed var(--border); color: var(--text-muted);
+    }
+
+    /* ── Experience ── */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+      width: 1px; background: var(--border);
+    }
+    .timeline-item { margin-bottom: 2.5rem; position: relative; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -2rem; top: 8px;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg-deep);
+      transform: translateX(-4px);
+    }
+    .timeline-date { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); margin-bottom: 0.4rem; }
+    .timeline-role { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; margin-bottom: 0.15rem; }
+    .timeline-company { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 0.6rem; }
+    .timeline-desc { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7; max-width: 620px; }
+    .timeline-highlight {
+      display: inline-block; margin-top: 0.5rem;
+      font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent);
+      background: var(--accent-glow); padding: 0.3rem 0.7rem; border-radius: 4px;
+    }
+
+    /* ── Achievements ── */
+    #achievements { background: var(--bg-surface); }
+    .achieve-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+    .achieve-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.75rem; transition: border-color 0.3s;
+    }
+    .achieve-card:hover { border-color: var(--accent-dim); }
+    .achieve-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+    .achieve-title { font-family: var(--font-display); font-weight: 600; font-size: 1rem; margin-bottom: 0.4rem; }
+    .achieve-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ── Contact ── */
+    #contact { background: var(--bg-deep); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .contact-text p { color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.8; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.25rem 1.5rem; border-radius: 10px;
+      background: var(--bg-card); border: 1px solid var(--border); transition: border-color 0.3s;
+    }
+    .contact-item:hover { border-color: var(--accent-dim); }
+    .contact-icon {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: var(--accent-glow); display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0;
+    }
+    .contact-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 2; }
+    .contact-item-label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.15rem; }
+    .contact-item-value { font-size: 0.9rem; color: var(--text-primary); }
+
+    footer {
+      padding: 2rem; text-align: center; border-top: 1px solid var(--border);
+      font-size: 0.78rem; color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 64px; left: 0; right: 0;
+        background: rgba(12, 12, 20, 0.97); padding: 1.5rem 2rem;
+        border-bottom: 1px solid var(--border); gap: 1.25rem;
+      }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .profile-pic { width: 140px; height: 140px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .project-gallery { grid-template-columns: 1fr 1fr; margin: 0 1.25rem 1.25rem; }
+      .featured-header { padding: 1.5rem 1.5rem 0; }
+      .featured-desc { padding: 1rem 1.5rem; }
+      .featured-tech { padding: 0 1.5rem 1.25rem; }
+      .results-section { margin: 0 1.25rem 1.25rem; }
+      .project-video { margin: 0 1.25rem 1.25rem; }
+      .project-actions { padding: 0 1.25rem 1.5rem; }
+      section { padding: 60px 1.25rem; }
+      .hero { padding: 100px 1.25rem 60px; }
+      .results-table { font-size: 0.75rem; }
+      .results-table th, .results-table td { padding: 0.5rem 0.6rem; }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════ NAV ════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">ADITYA<span>.</span></a>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════ HERO ════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-glow-2"></div>
+  <canvas id="hero-particles"></canvas>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Robotics Engineer</div>
+    <h1>Unni Aditya<br><span class="accent">Mohan</span></h1>
+    <p class="hero-desc">
+      MS Robotics student at Northeastern University. I work on multi-robot systems,
+      control, SLAM, and vision-guided manipulation. Before this, I spent three years
+      as a mechanical engineer building thermal systems and running simulations.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-primary">View Projects &darr;</a>
+      <a href="resume.pdf" class="btn btn-outline" target="_blank">Resume</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ ABOUT ════════════════════════════════════════════ -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-left reveal">
+        <div class="profile-pic">
+          <img src="assets/images/background/profile_pic.jpg" alt="Unni Aditya Mohan">
+        </div>
+        <div class="about-text">
+          <div class="section-label">About</div>
+          <div class="section-title">Hi, I'm Aditya.</div>
+          <p>
+            I'm currently pursuing my <strong>MS in Robotics at Northeastern University</strong>.
+            My work right now involves multi-robot coordination, vision-based manipulation,
+            and ROS2-based simulation — including a thermal controls project for the ISS
+            in collaboration with JAXA.
+          </p>
+          <p>
+            I did my undergrad in <strong>Mechanical Engineering at NIT Rourkela</strong>
+            and then worked for about three years as a <strong>Project Engineer at Thermax</strong>,
+            where I dealt with thermal systems, FEA, and manufacturing coordination. That
+            background in simulation and hardware is something I carry into my robotics work —
+            it helps when you need to think about how a robot actually holds up physically,
+            not just how the software runs.
+          </p>
+        </div>
+      </div>
+      <div class="edu-cards reveal">
+        <div class="edu-card">
+          <div class="edu-degree">MS in Robotics</div>
+          <div class="edu-school">Northeastern University, Boston</div>
+          <div class="edu-meta">
+            <span>Sep 2024 &ndash; Present</span>
+            <span class="gpa">GPA: 3.82</span>
+          </div>
+        </div>
+        <div class="edu-card">
+          <div class="edu-degree">B.Tech in Mechanical Engineering</div>
+          <div class="edu-school">NIT Rourkela, India</div>
+          <div class="edu-meta">
+            <span>Aug 2017 &ndash; Jun 2021</span>
+            <span class="gpa">CGPA: 8.12 / 10</span>
+          </div>
+        </div>
+        <div class="edu-card" style="border-color: var(--accent-dim); background: var(--accent-soft);">
+          <div class="edu-degree" style="color: var(--accent);">3 Years Industry Experience</div>
+          <div class="edu-school">Project Engineer &mdash; Thermax Ltd, Pune</div>
+          <div class="edu-meta"><span>Sep 2021 &ndash; May 2024</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ SKILLS ════════════════════════════════════════════ -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-label reveal">Capabilities</div>
+    <div class="section-title reveal">Technical Toolkit</div>
+    <p class="section-desc reveal">What I work with day to day.</p>
+    <div class="skills-grid">
+      <div class="skill-category reveal">
+        <div class="skill-icon">🤖</div>
+        <div class="skill-cat-title">Robotics &amp; Controls</div>
+        <div class="skill-tags">
+          <span class="skill-tag">ROS / ROS2</span>
+          <span class="skill-tag">Gazebo</span>
+          <span class="skill-tag">SLAM</span>
+          <span class="skill-tag">Motion Planning</span>
+          <span class="skill-tag">MPC / PID</span>
+          <span class="skill-tag">Sensor Fusion</span>
+          <span class="skill-tag">Inverse Kinematics</span>
+        </div>
+      </div>
+      <div class="skill-category reveal">
+        <div class="skill-icon">💻</div>
+        <div class="skill-cat-title">Programming &amp; Software</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">C++</span>
+          <span class="skill-tag">MATLAB</span>
+          <span class="skill-tag">OpenCV</span>
+          <span class="skill-tag">PyTorch</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">Linux</span>
+        </div>
+      </div>
+      <div class="skill-category reveal">
+        <div class="skill-icon">🔬</div>
+        <div class="skill-cat-title">Simulation &amp; Analysis</div>
+        <div class="skill-tags">
+          <span class="skill-tag">ANSYS Mechanical</span>
+          <span class="skill-tag">ANSYS Fluent</span>
+          <span class="skill-tag">COMSOL</span>
+          <span class="skill-tag">Simulink</span>
+          <span class="skill-tag">CFD</span>
+          <span class="skill-tag">FEA</span>
+          <span class="skill-tag">Thermal Analysis</span>
+        </div>
+      </div>
+      <div class="skill-category reveal">
+        <div class="skill-icon">⚙️</div>
+        <div class="skill-cat-title">Mechanical &amp; Hardware</div>
+        <div class="skill-tags">
+          <span class="skill-tag">SolidWorks</span>
+          <span class="skill-tag">AutoCAD</span>
+          <span class="skill-tag">GD&amp;T</span>
+          <span class="skill-tag">DFM / DFA</span>
+          <span class="skill-tag">3D Printing</span>
+          <span class="skill-tag">Arduino</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ PROJECTS ════════════════════════════════════════════ -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-label reveal">Projects</div>
+    <div class="section-title reveal">Selected Work</div>
+    <p class="section-desc reveal">A mix of robotics, controls, and simulation work. More being added over the next few weeks.</p>
+
+    <!-- ──── FEATURED: SAE Effi-Cycle ──── -->
+    <div class="featured-project reveal">
+      <div class="featured-header">
+        <div>
+          <div class="featured-label">Featured · CAD &amp; Structural Simulation</div>
+          <div class="featured-title">SAE Effi-Cycle — Chassis &amp; Suspension Design</div>
+          <div class="featured-subtitle">Human-electric hybrid vehicle for SAE India · Team of 4</div>
+        </div>
+        <div class="featured-date">Sep 2017 – Apr 2020</div>
+      </div>
+      <div class="featured-desc">
+        Led the design of a 15 kg chassis and suspension system for a solar-powered, two-passenger
+        Effi-Cycle built for the SAE India competition. Ran FEA in ANSYS Workbench across four load
+        cases — front impact, side impact, rollover, and torsion — and iterated the frame until all
+        of them passed stress, deformation, and factor-of-safety targets.
+      </div>
+      <div class="featured-tech">
+        <span class="skill-tag">SolidWorks</span>
+        <span class="skill-tag">ANSYS Mechanical</span>
+        <span class="skill-tag">Explicit Dynamics</span>
+        <span class="skill-tag">Static Structural FEA</span>
+        <span class="skill-tag">Topology Optimization</span>
+      </div>
+
+      <!-- IMAGE GALLERY — uses relative paths from assets/ folder -->
+      <div class="project-gallery">
+        <div class="gallery-item">
+          <img src="assets/images/effi-cycle/cad-topview.png" alt="CAD Top View" loading="lazy">
+          <div class="gallery-caption">CAD — Top View</div>
+        </div>
+        <div class="gallery-item">
+          <img src="assets/images/effi-cycle/isometric.jpg" alt="Isometric View" loading="lazy">
+          <div class="gallery-caption">Isometric View</div>
+        </div>
+        <div class="gallery-item">
+          <img src="assets/images/effi-cycle/mesh.png" alt="FE Mesh Model" loading="lazy">
+          <div class="gallery-caption">FE Mesh Model</div>
+        </div>
+        <div class="gallery-item">
+          <img src="assets/images/effi-cycle/stress.png" alt="Von Mises Stress" loading="lazy">
+          <div class="gallery-caption">Equivalent Stress (Front Impact)</div>
+        </div>
+        <div class="gallery-item">
+          <img src="assets/images/effi-cycle/deformation.png" alt="Total Deformation" loading="lazy">
+          <div class="gallery-caption">Total Deformation</div>
+        </div>
+        <div class="gallery-item">
+          <img src="assets/images/effi-cycle/fos.png" alt="Factor of Safety" loading="lazy">
+          <div class="gallery-caption">Factor of Safety</div>
+        </div>
+      </div>
+
+      <!-- FEA RESULTS TABLE -->
+      <div class="results-section">
+        <div class="results-title">FEA Results Summary</div>
+        <div class="results-subtitle">All load cases met structural integrity targets</div>
+        <table class="results-table">
+          <thead>
+            <tr><th>Load Case</th><th>Max Stress (MPa)</th><th>Max Deformation (mm)</th><th>Min FoS</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Front Impact</td><td>326.9</td><td>1.62</td><td>1.41</td><td><span class="pass">✓ Pass</span></td></tr>
+            <tr><td>Side Impact</td><td>140.9</td><td>1.79</td><td>3.10</td><td><span class="pass">✓ Pass</span></td></tr>
+            <tr><td>Rollover</td><td>308.9</td><td>5.83</td><td>1.49</td><td><span class="pass">✓ Pass</span></td></tr>
+            <tr><td>Torsion</td><td>370.6</td><td>2.83</td><td>1.24</td><td><span class="pass">✓ Pass</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!--
+        TO ADD A VIDEO: uncomment and replace the src
+        <div class="project-video">
+          <video controls preload="metadata" poster="assets/images/effi-cycle/thumbnail.jpg">
+            <source src="assets/videos/effi-cycle-demo.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        TO EMBED A YOUTUBE VIDEO:
+        <div class="project-video">
+          <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe>
+        </div>
+      -->
+
+      <!-- REPO / EXTERNAL LINKS -->
+      <div class="project-actions">
+        <!--
+        <a href="https://github.com/adityamohan/effi-cycle" class="project-link" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub Repo
+        </a>
+        -->
+      </div>
+    </div>
+
+    <!-- ──── UPCOMING PROJECTS ──── -->
+    <div style="margin-top: 2.5rem;">
+      <div class="section-label reveal" style="margin-bottom: 1.25rem;">Coming Soon</div>
+      <div class="upcoming-grid">
+        <div class="upcoming-card reveal">
+          <div class="upcoming-type">Robotics</div>
+          <div class="upcoming-title">Decentralized Multi-Robot Transportation</div>
+          <div class="upcoming-desc">Force feedback control for leader-follower wheeled robots with real-time load cell sensing at 100 Hz.</div>
+          <div class="upcoming-status">In progress</div>
+        </div>
+        <div class="upcoming-card reveal">
+          <div class="upcoming-type">ROS2 · Controls</div>
+          <div class="upcoming-title">ISS Thermal Control System (JAXA)</div>
+          <div class="upcoming-desc">ROS2-based thermal regulation with PID control for Space Station OS, simulating ISS subsystems in Gazebo.</div>
+          <div class="upcoming-status">Writeup pending</div>
+        </div>
+        <div class="upcoming-card reveal">
+          <div class="upcoming-type">Vision · Manipulation</div>
+          <div class="upcoming-title">PincherX100 Pick &amp; Place with Obstacle Avoidance</div>
+          <div class="upcoming-desc">Custom IK solver and collision avoidance for a vision-guided robotic manipulator.</div>
+          <div class="upcoming-status">Writeup pending</div>
+        </div>
+        <div class="upcoming-card reveal">
+          <div class="upcoming-type">Autonomous Systems · CFD</div>
+          <div class="upcoming-title">Autonomous Underwater Vehicle (AUV)</div>
+          <div class="upcoming-desc">42% drag reduction via CFD-driven redesign, topology-optimized chassis, custom ballast tank, torpedo launcher, and underwater gripper for ROBOSUB competitions.</div>
+          <div class="upcoming-status">Writeup pending</div>
+        </div>
+        <div class="upcoming-card reveal">
+          <div class="upcoming-type">SLAM · Autonomy</div>
+          <div class="upcoming-title">SLAM on Boston Dynamics Spot</div>
+          <div class="upcoming-desc">Mapping and localization pipeline deployed on the Spot quadruped platform.</div>
+          <div class="upcoming-status">Writeup pending</div>
+        </div>
+        <div class="upcoming-card reveal">
+          <div class="upcoming-type">Reinforcement Learning</div>
+          <div class="upcoming-title">Multi-Agent RL</div>
+          <div class="upcoming-desc">Multi-agent reinforcement learning research project exploring cooperative policies.</div>
+          <div class="upcoming-status">Writeup pending</div>
+        </div>
+      </div>
+    </div>
+
+    <!--
+      ══════════════════════════════════════════════════════════════
+      HOW TO ADD A NEW FEATURED PROJECT:
+      ══════════════════════════════════════════════════════════════
+
+      1. Create a folder:  assets/images/your-project-name/
+      2. Drop images there
+      3. Copy the <div class="featured-project"> block above
+      4. Update: title, description, tech tags, image paths, links
+      5. For a video:
+         - Local:   assets/videos/demo.mp4 → use <video> tag
+         - YouTube: use <iframe> embed
+      6. For a GitHub link: uncomment the project-actions block
+      ══════════════════════════════════════════════════════════════
+    -->
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ EXPERIENCE ════════════════════════════════════════════ -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-label reveal">Experience</div>
+    <div class="section-title reveal">Professional Background</div>
+    <p class="section-desc reveal">Where I've studied and worked.</p>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-date">Sep 2024 – Present</div>
+        <div class="timeline-role">MS in Robotics</div>
+        <div class="timeline-company">Northeastern University, Boston</div>
+        <div class="timeline-desc">
+          Coursework in Robot Mechanics &amp; Control, Sensing &amp; Navigation, and Reinforcement Learning.
+          Working on multi-robot transportation with force feedback, vision-guided pick-and-place,
+          and a ROS2 thermal simulation of ISS subsystems with JAXA.
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-date">Sep 2021 – May 2024</div>
+        <div class="timeline-role">Project Engineer</div>
+        <div class="timeline-company">Thermax Ltd, Pune, India</div>
+        <div class="timeline-desc">
+          Worked on industrial boiler projects — coordinating between engineering, procurement, and
+          manufacturing. Built an ML model to predict thermal design parameters, which cut about
+          20 man-hours from the CAD workflow. Also designed a reusable transport frame that
+          saved around $20K per project.
+        </div>
+        <div class="timeline-highlight">$20K saved/project · 20 man-hours automated</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ ACHIEVEMENTS ════════════════════════════════════════════ -->
+<section id="achievements">
+  <div class="section-inner">
+    <div class="section-label reveal">Achievements</div>
+    <div class="section-title reveal">Competitions &amp; Recognition</div>
+    <div class="achieve-grid" style="margin-top: 2rem;">
+      <div class="achieve-card reveal">
+        <div class="achieve-icon">🏆</div>
+        <div class="achieve-title">SAVe 2019 — Winners</div>
+        <div class="achieve-desc">First place at the SAVe competition held at IIT Madras, India.</div>
+      </div>
+      <div class="achieve-card reveal">
+        <div class="achieve-icon">🌊</div>
+        <div class="achieve-title">ROBOSUB 2019 — Semi-Finalists</div>
+        <div class="achieve-desc">Reached the semi-finals at the international ROBOSUB competition in San Diego, US.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ CONTACT ════════════════════════════════════════════ -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="section-label">Contact</div>
+        <div class="section-title">Let's connect</div>
+        <p class="contact-text">
+          I'm looking for full-time robotics roles after graduation — controls, simulation,
+          perception, or systems engineering. Happy to chat about collaborations too.
+        </p>
+      </div>
+      <div class="contact-links reveal">
+        <a href="mailto:adityamohan2604@gmail.com" class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-value">adityamohan2604@gmail.com</div>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/Adityamohan2604" class="contact-item" target="_blank">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">LinkedIn</div>
+            <div class="contact-item-value">Adityamohan2604</div>
+          </div>
+        </a>
+        <a href="https://github.com/adityamohan" class="contact-item" target="_blank">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">GitHub</div>
+            <div class="contact-item-value">adityamohan</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed &amp; built by Unni Aditya Mohan · © 2026</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open'));
+  });
+
+  // Hero particles — subtle floating dots and connecting lines
+  (function() {
+    const canvas = document.getElementById('hero-particles');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let w, h, particles = [];
+    const PARTICLE_COUNT = 45;
+    const CONNECT_DIST = 120;
+
+    function resize() {
+      const hero = canvas.parentElement;
+      w = canvas.width = hero.offsetWidth;
+      h = canvas.height = hero.offsetHeight;
+    }
+
+    function createParticles() {
+      particles = [];
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          r: Math.random() * 1.5 + 0.5
+        });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      // Draw connections
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < CONNECT_DIST) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(199, 140, 60, ${0.08 * (1 - dist/CONNECT_DIST)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      // Draw dots
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(199, 140, 60, 0.25)';
+        ctx.fill();
+        // Move
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+      }
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', () => { resize(); createParticles(); });
+    resize(); createParticles(); draw();
+  })();
+</script>
+
+</body>
+</html>
