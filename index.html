@@ -83,15 +83,15 @@
     .hero-bg {
       position: absolute; inset: -20px; z-index: 0;
       background: url('assets/images/background/bg_image.jpg') center / cover no-repeat;
-      opacity: 0.15;
-      filter: blur(6px) saturate(0.4) brightness(0.7);
+      opacity: 0.5;
+      filter: blur(3px) saturate(0.6) brightness(0.8);
       pointer-events: none;
       transform: scale(1.05);
     }
     /* Dark overlay for text readability */
     .hero-overlay {
       position: absolute; inset: 0; z-index: 0;
-      background: linear-gradient(135deg, rgba(12,12,20,0.92) 0%, rgba(12,12,20,0.7) 50%, rgba(12,12,20,0.85) 100%);
+      background: linear-gradient(135deg, rgba(12,12,20,0.82) 0%, rgba(12,12,20,0.6) 50%, rgba(12,12,20,0.8) 100%);
       pointer-events: none;
     }
     /* Blueprint grid overlay */
@@ -122,7 +122,18 @@
     #hero-particles {
       position: absolute; inset: 0; z-index: 1; pointer-events: none;
     }
-    .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto; position: relative; z-index: 2;
+      display: flex; align-items: center; justify-content: space-between; gap: 4rem;
+      width: 100%; flex-direction: row-reverse;
+    }
+    .hero-content { flex: 1; }
+    .hero-pic {
+      width:300px; height: 300px; border-radius: 14px; overflow: hidden;
+      border: 2px solid rgba(199,140,60,0.3); flex-shrink: 0;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 60px rgba(199,140,60,0.08);
+    }
+    .hero-pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .hero-eyebrow {
       font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent);
       letter-spacing: 0.08em; margin-bottom: 1.25rem;
@@ -166,22 +177,8 @@
     .section-desc { color: var(--text-secondary); max-width: 600px; margin-bottom: 3rem; }
 
     /* ── About ── */
-    #about { background: var(--bg-surface); position: relative; overflow: hidden; }
-    #about::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: url('assets/images/effi-cycle/cad-topview.png') center / cover no-repeat;
-      opacity: 0.03; filter: saturate(0);
-      pointer-events: none;
-    }
-    #about .section-inner { position: relative; z-index: 1; }
+    #about { background: var(--bg-surface); }
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-    .about-left { display: flex; flex-direction: column; gap: 2rem; }
-    .profile-pic {
-      width: 180px; height: 180px; border-radius: 12px; overflow: hidden;
-      border: 2px solid var(--border); flex-shrink: 0;
-    }
-    .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
     .about-text p { color: var(--text-secondary); margin-bottom: 1.25rem; line-height: 1.8; }
     .about-text p strong { color: var(--text-primary); font-weight: 500; }
     .edu-cards { display: flex; flex-direction: column; gap: 1.25rem; }
@@ -411,8 +408,11 @@
         background: rgba(12, 12, 20, 0.97); padding: 1.5rem 2rem;
         border-bottom: 1px solid var(--border); gap: 1.25rem;
       }
+      .hero-inner { flex-direction: column; text-align: center; gap: 2rem; }
+      .hero-pic { width: 180px; height: 180px; }
+      .hero-eyebrow { justify-content: center; }
+      .hero-ctas { justify-content: center; }
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .profile-pic { width: 140px; height: 140px; }
       .contact-grid { grid-template-columns: 1fr; }
       .project-gallery { grid-template-columns: 1fr 1fr; margin: 0 1.25rem 1.25rem; }
       .featured-header { padding: 1.5rem 1.5rem 0; }
@@ -460,16 +460,21 @@
   <div class="hero-glow-2"></div>
   <canvas id="hero-particles"></canvas>
   <div class="hero-inner">
-    <div class="hero-eyebrow">Robotics Engineer</div>
-    <h1>Unni Aditya<br><span class="accent">Mohan</span></h1>
-    <p class="hero-desc">
-      MS Robotics student at Northeastern University. I work on multi-robot systems,
-      control, SLAM, and vision-guided manipulation. Before this, I spent three years
-      as a mechanical engineer building thermal systems and running simulations.
-    </p>
-    <div class="hero-ctas">
-      <a href="#projects" class="btn btn-primary">View Projects &darr;</a>
-      <a href="resume.pdf" class="btn btn-outline" target="_blank">Resume</a>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Robotics Engineer</div>
+      <h1>Unni Aditya<br><span class="accent">Mohan</span></h1>
+      <p class="hero-desc">
+        MS Robotics student at Northeastern University. I work on multi-robot systems,
+        control, SLAM, and vision-guided manipulation. Before this, I spent three years
+        as a mechanical engineer building thermal systems and running simulations.
+      </p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn btn-primary">View Projects &darr;</a>
+        <a href="resume.pdf" class="btn btn-outline" target="_blank">Resume</a>
+      </div>
+    </div>
+    <div class="hero-pic">
+      <img src="assets/images/background/profile_pic.jpg" alt="Unni Aditya Mohan">
     </div>
   </div>
 </section>
@@ -478,28 +483,23 @@
 <section id="about">
   <div class="section-inner">
     <div class="about-grid">
-      <div class="about-left reveal">
-        <div class="profile-pic">
-          <img src="assets/images/background/profile_pic.jpg" alt="Unni Aditya Mohan">
-        </div>
-        <div class="about-text">
-          <div class="section-label">About</div>
-          <div class="section-title">Hi, I'm Aditya.</div>
-          <p>
-            I'm currently pursuing my <strong>MS in Robotics at Northeastern University</strong>.
-            My work right now involves multi-robot coordination, vision-based manipulation,
-            and ROS2-based simulation — including a thermal controls project for the ISS
-            in collaboration with JAXA.
-          </p>
-          <p>
-            I did my undergrad in <strong>Mechanical Engineering at NIT Rourkela</strong>
-            and then worked for about three years as a <strong>Project Engineer at Thermax</strong>,
-            where I dealt with thermal systems, FEA, and manufacturing coordination. That
-            background in simulation and hardware is something I carry into my robotics work —
-            it helps when you need to think about how a robot actually holds up physically,
-            not just how the software runs.
-          </p>
-        </div>
+      <div class="about-text reveal">
+        <div class="section-label">About</div>
+        <div class="section-title">Hi, I'm Aditya.</div>
+        <p>
+          I'm currently pursuing my <strong>MS in Robotics at Northeastern University</strong>.
+          My work right now involves multi-robot coordination, vision-based manipulation,
+          and ROS2-based simulation — including a thermal controls project for the ISS
+          in collaboration with JAXA.
+        </p>
+        <p>
+          I did my undergrad in <strong>Mechanical Engineering at NIT Rourkela</strong>
+          and then worked for about three years as a <strong>Project Engineer at Thermax</strong>,
+          where I dealt with thermal systems, FEA, and manufacturing coordination. That
+          background in simulation and hardware is something I carry into my robotics work —
+          it helps when you need to think about how a robot actually holds up physically,
+          not just how the software runs.
+        </p>
       </div>
       <div class="edu-cards reveal">
         <div class="edu-card">
