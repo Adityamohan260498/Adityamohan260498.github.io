@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<!-- GENERATED FILE: do not edit directly.
+     Source: content/humidity-chamber.frag   Rebuild: python tools/build_project_pages.py -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Humidity Chamber · Cross-Flow Cooling & Atomizer Humidification · Unni Aditya Mohan</title>
+  <meta name="description" content="Design and multiphase CFD of a two-unit environmental test chamber: cross-flow finned heat exchanger and atomizer-fed humidification, analyzed in ANSYS Fluent.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css?v=3">
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════ NAV ════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">ADITYA<span>.</span></a>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════ BACK BAR ════════════════════════════════════════════ -->
+<div class="backbar">
+  <div class="backbar-inner">
+    <a class="back-link" href="../index.html#p-humidity-chamber"><span>←</span> All projects</a>
+    <span class="backbar-title">Humidity Chamber · Cross-Flow Cooling & Atomizer Humidification</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ PROJECT ════════════════════════════════════════════ -->
+<section id="projects" class="project-detail">
+  <div class="section-inner">
+
+    <!-- ──── FEATURED: Humidity / Climate Test Chamber ──── -->
+    <div class="featured-project reveal">
+      <div class="featured-header">
+        <div>
+          <div class="featured-label">Featured · Thermal Design &amp; Multiphase CFD</div>
+          <div class="featured-title">Humidity Chamber · Cross-Flow Cooling &amp; Atomizer Humidification</div>
+          <div class="featured-subtitle">Research internship · NIT Rourkela · Advisor: Prof. Tarapada Roy · ANSYS Fluent 18.x · SolidWorks</div>
+        </div>
+        <div class="featured-date">2020 – Mar 2021</div>
+      </div>
+      <div class="featured-desc">
+        Environmental test chambers qualify hardware by holding it at a controlled temperature and humidity. The 85/85 damp-heat standard parks a part at 85&nbsp;°C and 85% RH for up to 1000 hours, and HALT/HASS
+        cycling swings it harder than that. Building one means solving two coupled control problems with
+        <strong>opposite requirements</strong>: you must first drive the incoming air to a target dry-bulb
+        temperature, then inject exactly enough water to hit a target relative humidity, without the water
+        undoing the temperature setpoint, and without liquid ever reaching the test article.
+        <br><br>
+        That second failure mode is the one nobody designs for. If the spray does not break up and evaporate
+        before it reaches the payload, <strong>you are no longer running a humidity test, you are running a water
+        ingress test</strong>, and every result from that chamber is suspect. I designed the chamber around two decoupled
+        units: a cross-flow finned heat exchanger to set dry-bulb temperature, and an atomizer-fed
+        humidification stage. I analyzed both: conjugate heat transfer through the exchanger, and
+        multiphase CFD of the spray that feeds the humidity unit.
+      </div>
+      <div class="featured-tech">
+        <span class="skill-tag">ANSYS Fluent</span>
+        <span class="skill-tag">VOF Multiphase</span>
+        <span class="skill-tag">Cross-Flow Heat Exchanger</span>
+        <span class="skill-tag">Conjugate Heat Transfer</span>
+        <span class="skill-tag">Psychrometrics</span>
+        <span class="skill-tag">SolidWorks</span>
+      </div>
+
+      <div class="metric-row">
+        <div class="metric">
+          <div class="metric-num">7<small> K</small></div>
+          <div class="metric-label">air temperature drop per heat exchanger stage (30 °C → 23 °C)</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">3<small>×</small></div>
+          <div class="metric-label">stages specified in series to reach the required setpoint</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">0.968</div>
+          <div class="metric-label">peak liquid volume fraction at the orifice, a coherent core rather than a mist</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">~30<small>%</small></div>
+          <div class="metric-label">of chamber length still holding liquid water at t = 5 s</div>
+        </div>
+      </div>
+
+      <!-- ARCHITECTURE -->
+      <div class="spec-block">
+        <div class="block-title">Two-Unit Architecture</div>
+        <div class="block-sub">Temperature and humidity are deliberately decoupled into separate units so each can be analyzed and controlled independently.</div>
+        <div class="spec-grid">
+          <div class="spec-item">
+            <div class="spec-key">Unit 1 · Temperature Control</div>
+            <div class="spec-val">Cross-flow heat exchanger: two interleaved serpentine tube circuits carrying chilled water through a stacked plate-fin array, with the process air passing across them. Fins were added specifically to raise the air-side heat transfer rate, which is the limiting resistance.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Unit 2 · Humidity Control</div>
+            <div class="spec-val">The now-cold dry air passes into a chamber where multi-orifice atomizers inject water. Dry air absorbs the moisture, moving the state up the psychrometric chart at roughly constant dry-bulb temperature to the target RH.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Solver</div>
+            <div class="spec-val">ANSYS Fluent (Workbench 18.1 / 18.2), pressure-based. Conjugate heat transfer for the exchanger; transient Volume-of-Fluid with explicit interface reconstruction for the spray.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Exchanger Scale</div>
+            <div class="spec-val">Core roughly 100 mm across, resolved with tube inner walls, plate fins and both water circuits as separate solid zones so wall temperature is a solved field rather than a boundary condition.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Operating Point</div>
+            <div class="spec-val">Process air in at 30 °C; chilled water in at 0 °C; atomizer water at 25 °C. Transient spray runs carried to t = 5 s.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Psychrometric Basis</div>
+            <div class="spec-val">Target states set via DBT / WBT / dew point on the psychrometric chart. Air density computed through the virtual-temperature route (saturation vapour pressure → actual vapour pressure → <em>T<sub>v</sub></em>), then velocity and mass air flow.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Design Context</div>
+            <div class="spec-val">85/85 damp-heat soak (85 °C, 85% RH, up to 1000 h), HALT and HASS accelerated cycling, thermal shock, for pharmaceutical, plastics, rubber and electronics qualification.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Driving Constraint</div>
+            <div class="spec-val">Climate chambers are heavy continuous energy consumers. Every design decision here trades against the electrical load needed to hold a setpoint for a 1000-hour soak.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GALLERY: HEAT EXCHANGER -->
+      <div class="results-title" style="padding:0 2.5rem 0.35rem; font-family:var(--font-display); font-size:0.95rem; font-weight:600;">Unit 1 · Cross-Flow Heat Exchanger</div>
+      <div class="results-subtitle" style="padding:0 2.5rem 1rem; font-size:0.8rem; color:var(--text-muted);">Design and conjugate heat transfer analysis of the temperature control unit.</div>
+      <div class="project-gallery">
+        <div class="gallery-item">
+          <img src="../assets/images/humidity-chamber/hx-iso-cad.jpg" alt="Cross-flow finned heat exchanger, isometric CAD" loading="lazy">
+          <div class="gallery-caption">Exchanger core, serpentine tubes through plate-fin stack</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/humidity-chamber/hx-front-cad.jpg" alt="Heat exchanger front view showing two interleaved circuits" loading="lazy">
+          <div class="gallery-caption">Front view, two interleaved water circuits</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/humidity-chamber/hx-temp-front.jpg" alt="Temperature contour through the heat exchanger" loading="lazy">
+          <div class="gallery-caption">Air-side temperature field, 273–300 K</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/humidity-chamber/hx-inner-wall-temp.jpg" alt="Tube inner wall temperature contour" loading="lazy">
+          <div class="gallery-caption">Tube inner-wall temperature along the circuit</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/humidity-chamber/hx-velocity-streamlines.jpg" alt="Velocity streamlines through the exchanger" loading="lazy">
+          <div class="gallery-caption">Air velocity streamlines, peak 5.20 m/s</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/humidity-chamber/hx-temp-iso.jpg" alt="Isometric temperature profile of the exchanger" loading="lazy">
+          <div class="gallery-caption">Isometric section, inlet face vs. cooled core</div>
+        </div>
+      </div>
+
+      <!-- GALLERY: ATOMIZER -->
+      <div class="results-title" style="padding:0 2.5rem 0.35rem; font-family:var(--font-display); font-size:0.95rem; font-weight:600;">Unit 2 · Atomizer &amp; Humidity Chamber</div>
+      <div class="results-subtitle" style="padding:0 2.5rem 1rem; font-size:0.8rem; color:var(--text-muted);">Multiphase VOF study of the spray and where the liquid ends up.</div>
+      <div class="project-gallery gallery-4">
+        <div class="gallery-item">
+          <img src="../assets/images/humidity-chamber/nozzle-cad.jpg" alt="Atomizer nozzle CAD" loading="lazy">
+          <div class="gallery-caption">Multi-orifice atomizer nozzle</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/humidity-chamber/nozzle-vof-multiorifice.jpg" alt="VOF volume fraction resolving individual orifice jets" loading="lazy">
+          <div class="gallery-caption">Individual orifice jets, α = 1.0 at exit</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/humidity-chamber/nozzle-spray-vof.jpg" alt="Near-field spray volume fraction" loading="lazy">
+          <div class="gallery-caption">Merged plume, peak α = 0.968</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/humidity-chamber/chamber-vof-5s.jpg" alt="Chamber-scale water volume fraction at 5 seconds" loading="lazy">
+          <div class="gallery-caption">Chamber at t = 5 s, recirculation vortex</div>
+        </div>
+      </div>
+
+      <!-- RESULTS TABLE -->
+      <div class="results-section">
+        <div class="results-title">Results Summary</div>
+        <div class="results-subtitle">What each stage of the analysis produced, and which phase of the program it came from.</div>
+        <table class="results-table">
+          <thead>
+            <tr><th>Analysis</th><th>Result</th><th>Design Consequence</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Exchanger duty</td>
+              <td>30 °C → 23 °C air, water in at 0 °C</td>
+              <td>7 K per stage is not enough alone, so three exchangers were specified in series.</td>
+            </tr>
+            <tr>
+              <td>Tube inner-wall temperature</td>
+              <td>≈280 K inlet → ≈294 K outlet</td>
+              <td>~14 K rise along the circuit confirms the water side is genuinely loading up, not short-circuiting.</td>
+            </tr>
+            <tr>
+              <td>Air-side streamlines</td>
+              <td>Peak 5.20 m/s, heavy recirculation around the fin bank</td>
+              <td>Flow is not clean through the core; fin pitch and duct entry are the levers on air-side resistance.</td>
+            </tr>
+            <tr class="chosen">
+              <td>Near-field spray (VOF)</td>
+              <td>α = 1.0 at each orifice, 0.968 in the merged plume</td>
+              <td>The nozzle discharges a coherent liquid core, not a mist, so evaporation rate cannot be assumed.</td>
+            </tr>
+            <tr class="chosen">
+              <td>Chamber-scale spray (VOF)</td>
+              <td>Liquid confined to ~30% of chamber length at t = 5 s, wrapped in a vortex</td>
+              <td>Test article must not sit in the upstream third; nozzle placement and baffling govern uniformity.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="results-note">
+          Volume fraction values are read from the solver legends. Wall temperatures are read from the contour
+          bands and are therefore approximate.
+        </div>
+      </div>
+
+      <!-- FINDINGS -->
+      <div class="spec-block">
+        <div class="block-title">What the Analysis Showed</div>
+        <div class="block-sub">Four conclusions, and what each one implies for the hardware.</div>
+        <div class="findings">
+          <div class="finding"><span class="finding-n">01</span><span>
+            <b>One exchanger stage cannot hold the setpoint.</b>
+            With chilled water entering at 0 °C, essentially the coldest practical supply, a single stage
+            pulls 30 °C air down to only 23 °C. That <em>7 K per stage</em> is what forced the three-stage series
+            arrangement, and it is the number that sets the chiller duty and the energy bill for a 1000-hour soak.
+          </span></div>
+          <div class="finding"><span class="finding-n">02</span><span>
+            <b>The air side is the limiting resistance, and the flow field proves it.</b>
+            Streamlines show the air recirculating heavily around the fin bank rather than passing cleanly
+            through it, peaking at <em>5.20 m/s</em>. Fins were the right instinct, but fin pitch and duct entry
+            geometry, not more tube length, are where the remaining heat transfer is hiding.
+          </span></div>
+          <div class="finding"><span class="finding-n">03</span><span>
+            <b>The atomizer discharges a coherent liquid core, not a fine mist.</b>
+            Resolving the nozzle orifice-by-orifice shows <em>α = 1.0</em> at each exit, merging into a plume that
+            still peaks at 0.968. A chamber sized on the assumption that water leaves the nozzle pre-atomised
+            will over-predict its evaporation rate and under-deliver RH at the setpoint.
+          </span></div>
+          <div class="finding"><span class="finding-n">04</span><span>
+            <b>The chamber traps liquid in a recirculation vortex, so geometry is the lever, not flow rate.</b>
+            At t = 5 s the liquid is concentrated in roughly the first <em>30% of the chamber length</em>, wrapped
+            into a vortex, with the downstream two-thirds near α ≈ 0. The fix is nozzle placement and baffling.
+            Turning up the water flow just puts more liquid where there is already too much.
+          </span></div>
+        </div>
+      </div>
+
+      <!-- SCOPE -->
+      <div class="results-section">
+        <div class="results-title">Model Scope &amp; Next Steps</div>
+        <div class="results-subtitle">Where these models are valid, where they are not, and what would close the design out.</div>
+        <table class="results-table">
+          <thead>
+            <tr><th>Aspect</th><th>Status</th><th>What It Means</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Exchanger conjugate HT</td><td><span class="pass">✓ Resolved</span></td><td>Tube walls, fins and both circuits solved as coupled solid zones, so wall temperature is a result, not an assumption.</td></tr>
+            <tr><td>Near-field liquid core</td><td><span class="pass">✓ Resolved</span></td><td>VOF is the correct model at the orifice; the breakup behavior is trustworthy.</td></tr>
+            <tr><td>Far-field droplet transport</td><td>Out of scope</td><td>VOF cannot resolve a dispersed droplet population. A Lagrangian DPM run with an evaporation model is required to close the humidity mass balance.</td></tr>
+            <tr><td>Grid independence</td><td>Not performed</td><td>Contours are qualitative. Absolute breakup length and exchanger duty need a mesh convergence study before they are quotable.</td></tr>
+            <tr><td>Experimental correlation</td><td>Not performed</td><td>No psychrometric instrumentation was available; neither model is validated against measured RH or outlet temperature.</td></tr>
+            <tr><td>Energy consumption</td><td>Open</td><td>The stated motivation, chamber energy draw, needs the evaporation model and a chiller duty calculation before any kWh figure is meaningful.</td></tr>
+          </tbody>
+        </table>
+        <div class="results-note">
+          Carried as far as a single research-internship term allowed. I would rather show the boundary of the
+          model than quote numbers it cannot support. The parametric sweep over inlet air temperature, water
+          flow rate and injector position is the obvious continuation.
+        </div>
+      </div>
+
+      <div class="project-actions">
+        <a href="../assets/docs/humidity-chamber-cfd-report.pdf" class="project-link" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+          My Internship Report (PDF)
+        </a>
+      </div>
+    </div>
+
+    <nav class="page-nav" aria-label="Project navigation">
+      <a href="metal-hydride-reactor.html">← Metal Hydride Hydrogen Storage Reactor</a>
+      <a href="effi-cycle.html">SAE Effi-Cycle · Chassis & Suspension Design →</a>
+    </nav>
+
+  </div>
+</section>
+
+<footer>
+  <p>Designed &amp; built by Unni Aditya Mohan · © 2026</p>
+</footer>
+
+<script src="../assets/js/main.js?v=3"></script>
+</body>
+</html>

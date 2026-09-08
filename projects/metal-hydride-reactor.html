@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<!-- GENERATED FILE: do not edit directly.
+     Source: content/metal-hydride-reactor.frag   Rebuild: python tools/build_project_pages.py -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metal Hydride Hydrogen Storage Reactor · Unni Aditya Mohan</title>
+  <meta name="description" content="Transient thermal and reacting porous-media simulation of a 30 bar metal hydride hydrogen storage vessel in COMSOL, with a fin array trade study against a parasitic mass budget.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css?v=3">
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════ NAV ════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">ADITYA<span>.</span></a>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════ BACK BAR ════════════════════════════════════════════ -->
+<div class="backbar">
+  <div class="backbar-inner">
+    <a class="back-link" href="../index.html#p-metal-hydride-reactor"><span>←</span> All projects</a>
+    <span class="backbar-title">Metal Hydride Hydrogen Storage Reactor</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ PROJECT ════════════════════════════════════════════ -->
+<section id="projects" class="project-detail">
+  <div class="section-inner">
+
+    <!-- ──── FEATURED: Metal Hydride Hydrogen Storage Reactor ──── -->
+    <div class="featured-project reveal">
+      <div class="featured-header">
+        <div>
+          <div class="featured-label">Featured · Transient Thermal &amp; Reacting Porous-Media Simulation</div>
+          <div class="featured-title">Fin-Optimized Metal Hydride Hydrogen Storage Reactor</div>
+          <div class="featured-subtitle">B.Tech thesis · NIT Rourkela · Advisor: Prof. S. Anbarasu · COMSOL Multiphysics 5.6</div>
+        </div>
+        <div class="featured-date">Dec 2020 – May 2021</div>
+      </div>
+      <div class="featured-desc">
+        LmNi<sub>4.91</sub>Sn<sub>0.15</sub> absorbs hydrogen exothermically at 30.8 kJ/mol H<sub>2</sub>, but the
+        packed bed conducts heat at only ~1.26 W/m·K, roughly 300× worse than the copper sitting next to it.
+        That makes charging a <strong>heat-rejection problem, not a kinetics problem</strong>: the bed self-heats,
+        the Van't Hoff equilibrium pressure climbs toward the 30 bar supply pressure, the driving potential
+        ln(P/P<sub>eq</sub>) collapses, and absorption stalls long before the alloy is full.
+        <br><br>
+        I built a transient model coupling the energy equation, Darcy flow through the porous bed, and Arrhenius
+        absorption kinetics, screening tube layout on a cheap 2-D 60-tube cross-section, then carrying the
+        3-D 36-tube quarter-symmetry model through the fin trade study. The design question was never
+        "how fast can it charge." It was <strong>how much parasitic copper mass am I willing to carry per second
+        of charge time saved</strong>, on a device whose entire reason for existing is gravimetric storage density.
+      </div>
+      <div class="featured-tech">
+        <span class="skill-tag">COMSOL Multiphysics</span>
+        <span class="skill-tag">Conjugate Heat Transfer</span>
+        <span class="skill-tag">Porous Media / Darcy Flow</span>
+        <span class="skill-tag">Reaction Kinetics</span>
+        <span class="skill-tag">Fin &amp; Heat Exchanger Design</span>
+        <span class="skill-tag">Parametric Trade Study</span>
+      </div>
+
+      <div class="metric-row">
+        <div class="metric">
+          <div class="metric-num">88<small> s</small></div>
+          <div class="metric-label">to 90% state of charge, down from 147 s on the 4-fin baseline (&minus;40%)</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">&minus;38<small>%</small></div>
+          <div class="metric-label">copper mass vs. the fin array of equivalent charge time</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">16.8<small> kW</small></div>
+          <div class="metric-label">peak heat rejection load on a 2.25 kg charge (7.5 kW per kg of alloy)</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">1.1<small>%</small></div>
+          <div class="metric-label">change in charge time across a 20× sweep of shell-side <em>h</em></div>
+        </div>
+      </div>
+
+      <!-- MODEL SETUP -->
+      <div class="spec-block">
+        <div class="block-title">Model Setup</div>
+        <div class="block-sub">Two-stage approach: a cheap 2-D cross-section to screen tube layout, then a 3-D quarter-symmetry model carrying the fins, shell and heat transfer fluid for the trade study.</div>
+        <div class="spec-grid">
+          <div class="spec-item">
+            <div class="spec-key">Solver &amp; Discretisation</div>
+            <div class="spec-val">COMSOL Multiphysics 5.6, fully transient. Free tetrahedral mesh, refined at tube walls and fin roots where the thermal gradient concentrates.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Physics Coupling</div>
+            <div class="spec-val">Energy equation (conduction + convection) ↔ Darcy's law momentum transport in porous media ↔ H<sub>2</sub> mass diffusion, closed by a user-defined absorption source term.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Geometry</div>
+            <div class="spec-val">Ø102.26 mm bore × 50 mm, Ø114.3 mm shell OD. 36 embedded cooling tubes (Ø6.35 / Ø4.57 mm) on three pitch circles at <em>r</em> = 18.08 / 29.15 / 40.23 mm, Ø14 mm central sintered H<sub>2</sub> filter.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Bed Material</div>
+            <div class="spec-val">LmNi<sub>4.91</sub>Sn<sub>0.15</sub>: <em>M</em> = 0.432 kg/mol, ρ<sub>cryst</sub> = 8300 kg/m³, porosity <em>ε</em> = 0.5, saturation capacity 1.4 wt%.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Kinetics &amp; Thermodynamics</div>
+            <div class="spec-val"><em>C<sub>a</sub></em> = 59.187 s<sup>&minus;1</sup>, <em>E<sub>a</sub></em> = 21 179.6 J/mol. Δ<em>H</em> = 30 800 J/mol H<sub>2</sub>, Δ<em>S</em> = 108 J/mol·K, plateau slope factor 0.038, hysteresis factor 0.137.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Thermal Conductivities</div>
+            <div class="spec-val">Bed effective <em>k</em> ≈ 1.26 W/m·K (solid 2.4, H<sub>2</sub> 0.127, ε = 0.5) against copper fins at ~400 W/m·K, a 300× contrast and the entire reason the fins exist.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Operating Point</div>
+            <div class="spec-val">30 bar H<sub>2</sub> supply, bed initially at 293 K, HTF water entering the tubes at 293 K / 0.1 m/s.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Design Space Swept</div>
+            <div class="spec-val">Fin count 4–10, fin thickness 1–3 mm, shell-side convection coefficient 100–2000 W/m²·K. 13 transient runs carried to 1000–2000 s.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GOVERNING EQUATIONS -->
+      <div class="eqn-list">
+        <div class="eqn">ρ c<sub>p</sub> ∂T/∂t + ρ<sub>g</sub> c<sub>p,g</sub> u·∇T = ∇·(k<sub>eff</sub> ∇T) + Q̇<i>energy: bed and gas, conduction + convection</i></div>
+        <div class="eqn">Q̇ = (ΔH / M<sub>H₂</sub>) · ṁ<sub>abs</sub><i>volumetric heat source from hydriding</i></div>
+        <div class="eqn">ṁ<sub>abs</sub> = C<sub>a</sub> · exp(−E<sub>a</sub> / R<sub>u</sub>T) · ln(P / P<sub>eq</sub>) · (ρ<sub>sat</sub> − ρ) · (1 − ε)<i>Arrhenius absorption rate</i></div>
+        <div class="eqn">ln P<sub>eq</sub> = −ΔH/(R<sub>u</sub>T) + ΔS/R<sub>u</sub> + (φ<sub>s</sub> + φ<sub>o</sub>)·tan[π(X/X<sub>f</sub> − ½)] ± ½·Hys<i>Van't Hoff with plateau slope and hysteresis</i></div>
+        <div class="eqn">u = −(K / μ) ∇P<i>Darcy momentum transport through the porous bed</i></div>
+      </div>
+
+      <!-- IMAGE GALLERY -->
+      <div class="project-gallery">
+        <div class="gallery-item">
+          <img src="../assets/images/hydrogen-storage/2d-model-60ect.jpg" alt="2-D cross-section with 60 embedded cooling tubes" loading="lazy">
+          <div class="gallery-caption">2-D screening model, 60 ECT on 4 pitch circles</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/hydrogen-storage/3d-model-annotated.jpg" alt="3-D quarter-symmetry model, annotated" loading="lazy">
+          <div class="gallery-caption">3-D quarter model: shell, MH bed, HTF tube, fins</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/hydrogen-storage/fin-geometry.jpg" alt="Annular copper fin geometry" loading="lazy">
+          <div class="gallery-caption">Annular Cu fin, 36 tube penetrations</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/hydrogen-storage/bed-temp-50s.jpg" alt="Bed temperature field at 50 s" loading="lazy">
+          <div class="gallery-caption">Bed temperature, t = 50 s: hot core, cold tube halos</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/hydrogen-storage/bed-temp-200s.jpg" alt="Bed temperature field at 200 s" loading="lazy">
+          <div class="gallery-caption">t = 200 s, reaction front receding toward the shell</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/hydrogen-storage/bed-temp-500s.jpg" alt="Bed temperature field at 500 s" loading="lazy">
+          <div class="gallery-caption">t = 500 s, bed quenched back to HTF temperature</div>
+        </div>
+      </div>
+
+      <!-- FIN TRADE STUDY -->
+      <div class="results-section">
+        <div class="results-title">Fin Array Trade Study · Charge Time vs. Parasitic Copper Mass</div>
+        <div class="results-subtitle">Transient runs at 30 bar H<sub>2</sub>, HTF 293 K. t<sub>50</sub> / t<sub>90</sub> / t<sub>95</sub> = time to reach that fraction of the 1.4 wt% saturation capacity.</div>
+        <table class="results-table">
+          <thead>
+            <tr><th>Fin Config</th><th>Peak Bed Temp</th><th>t<sub>50</sub></th><th>t<sub>90</sub></th><th>t<sub>95</sub></th><th>Cu Mass</th><th>Verdict</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>4 × 2 mm</td><td>368.8 K</td><td>35 s</td><td>147 s</td><td>185 s</td><td>496 g</td><td>Baseline</td></tr>
+            <tr><td>6 × 2 mm</td><td>365.7 K</td><td>27 s</td><td>109 s</td><td>139 s</td><td>744 g</td><td>&ndash;</td></tr>
+            <tr><td>8 × 2 mm</td><td>361.9 K</td><td>22 s</td><td>81 s</td><td>111 s</td><td>992 g</td><td>Fastest, but heavy</td></tr>
+            <tr><td>10 × 2 mm</td><td>354.6 K</td><td>19 s</td><td>67 s</td><td>93 s</td><td>1240 g</td><td>Mass-prohibitive</td></tr>
+            <tr><td>8 × 1 mm</td><td>368.2 K</td><td>28 s</td><td>109 s</td><td>138 s</td><td>496 g</td><td>&ndash;</td></tr>
+            <tr class="chosen"><td>10 × 1 mm</td><td>366.8 K</td><td>25 s</td><td>88 s</td><td>117 s</td><td>620 g</td><td><span class="sel">◆ Selected</span></td></tr>
+            <tr><td>6 × 3 mm</td><td>359.9 K</td><td>24 s</td><td>79 s</td><td>97 s</td><td>1116 g</td><td>&ndash;</td></tr>
+            <tr><td>8 × 3 mm</td><td>346.6 K</td><td>20 s</td><td>70 s</td><td>94 s</td><td>1488 g</td><td>Worst g per s saved</td></tr>
+          </tbody>
+        </table>
+        <div class="results-note">
+          Charge fraction is the volume-averaged bed concentration from the COMSOL transient solutions.
+          Copper mass derived from the annular fin geometry (R<sub>i</sub> = 51.13 mm, Ø14 mm filter bore,
+          36 × Ø6.35 mm tube penetrations, ρ<sub>Cu</sub> = 8960 kg/m³).
+        </div>
+      </div>
+
+      <!-- SHELL CONVECTION SENSITIVITY -->
+      <div class="results-section">
+        <div class="results-title">Shell-Side Convection Sensitivity · 10 × 1 mm Configuration</div>
+        <div class="results-subtitle">Sweeping the outer-shell heat transfer coefficient to decide whether a forced-convection jacket earns its place in the BOM.</div>
+        <table class="results-table">
+          <thead>
+            <tr><th>Shell <em>h</em> (W/m²·K)</th><th>Equivalent Regime</th><th>Peak Bed Temp</th><th>t<sub>90</sub></th><th>t<sub>95</sub></th></tr>
+          </thead>
+          <tbody>
+            <tr class="chosen"><td>100</td><td>Natural convection</td><td>366.8 K</td><td>88 s</td><td>118 s</td></tr>
+            <tr><td>500</td><td>Light forced air</td><td>366.9 K</td><td>88 s</td><td>118 s</td></tr>
+            <tr><td>1000</td><td>Forced air</td><td>366.9 K</td><td>88 s</td><td>118 s</td></tr>
+            <tr><td>1500</td><td>Liquid jacket</td><td>367.0 K</td><td>89 s</td><td>119 s</td></tr>
+            <tr><td>2000</td><td>Aggressive liquid jacket</td><td>367.0 K</td><td>89 s</td><td>119 s</td></tr>
+          </tbody>
+        </table>
+        <div class="results-note">
+          A 20× increase in shell-side <em>h</em> moves charge time by 1 s and peak bed temperature by 0.2 K.
+          The shell is not a load-bearing heat path, so an external jacket would spend pump or fan power for nothing.
+        </div>
+      </div>
+
+      <!-- ENGINEERING FINDINGS -->
+      <div class="spec-block">
+        <div class="block-title">What the Model Actually Decided</div>
+        <div class="block-sub">The conclusions that changed the hardware, not the ones that restate the physics.</div>
+        <div class="findings">
+          <div class="finding"><span class="finding-n">01</span><span>
+            <b>The reactor is heat-rejection-limited, and the limit bites within three seconds.</b>
+            Peak heat release is <em>7.5 kW per kg of alloy</em>, 16.8 kW for a 2.25 kg charge and 485 kJ total,
+            dumped into a bed that conducts at 1.26 W/m·K. Every lever worth pulling was a conduction-path
+            lever; the gas side and the kinetics were never the constraint.
+          </span></div>
+          <div class="finding"><span class="finding-n">02</span><span>
+            <b>Fin count beats fin thickness per gram of copper spent.</b>
+            10 × 1 mm reaches 90% charge in 88 s on 620 g of copper. 8 × 2 mm gets there in 81 s but needs
+            992 g. That is <em>8% slower for 38% less parasitic mass</em>, and on a device sold on gravimetric
+            storage density, mass is the currency. 10 × 1 mm was selected.
+          </span></div>
+          <div class="finding"><span class="finding-n">03</span><span>
+            <b>Returns collapse past eight fins at fixed thickness.</b>
+            Going 4 → 8 fins cut t<sub>90</sub> from 147 s to 81 s (&minus;45%). Going 8 → 10 bought only
+            14 more seconds for another 248 g of copper. The knee in that curve is the design point.
+          </span></div>
+          <div class="finding"><span class="finding-n">04</span><span>
+            <b>The shell is a dead heat path, so specify natural convection and delete the jacket.</b>
+            Sweeping shell-side <em>h</em> over 100–2000 W/m²·K moved t<sub>90</sub> by one second. The bed near
+            the shell sits at low H<sub>2</sub> partial pressure, so it absorbs little and generates little heat;
+            there is nothing there for a jacket to remove. This removed an entire subsystem from the BOM.
+          </span></div>
+          <div class="finding"><span class="finding-n">05</span><span>
+            <b>Rejected the coldest design on purpose.</b>
+            8 × 3 mm gives the lowest peak bed temperature in the study (346.6 K) and a respectable 70 s
+            t<sub>90</sub>, but costs 1.49 kg of copper, the worst mass-per-second-saved of any candidate.
+            Lowest peak temperature is not the objective function; charge time per unit parasitic mass is.
+          </span></div>
+        </div>
+      </div>
+
+      <div class="project-actions">
+        <a href="../assets/docs/metal-hydride-thermal-modeling-thesis.pdf" class="project-link" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+          Full Thesis (PDF)
+        </a>
+      </div>
+    </div>
+
+    <nav class="page-nav" aria-label="Project navigation">
+      <a href="../index.html#projects">← All projects</a>
+      <a href="humidity-chamber.html">Humidity Chamber · Cross-Flow Cooling & Atomizer Humidification →</a>
+    </nav>
+
+  </div>
+</section>
+
+<footer>
+  <p>Designed &amp; built by Unni Aditya Mohan · © 2026</p>
+</footer>
+
+<script src="../assets/js/main.js?v=3"></script>
+</body>
+</html>
