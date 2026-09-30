@@ -1,9 +1,9 @@
-# adityamohan.github.io
+# adityamohan260498.github.io
 
 Personal portfolio — Unni Aditya Mohan
 Mechanical / Thermal Engineer · MS Robotics, Northeastern University
 
-🔗 **Live at:** [adityamohan.github.io](https://adityamohan.github.io)
+🔗 **Live at:** [adityamohan.github.io](https://adityamohan260498.github.io)
 
 ## Structure
 
