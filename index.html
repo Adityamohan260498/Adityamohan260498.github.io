@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/main.css?v=3">
+  <link rel="stylesheet" href="assets/css/main.css?v=5">
 </head>
 <body>
 
@@ -247,6 +247,81 @@
       ───────────────────────────────────────────────────────────────────── -->
       <div class="project-index">
 
+        <!-- Cards with a .pc-wip pip are live projects — the detail page carries a
+             .wip-banner saying what works today and what is still open. -->
+        <a class="project-card reveal" id="p-g1-locomotion" href="projects/g1-locomotion.html">
+          <div class="pc-preview" data-interval="1000">
+            <img class="active" src="assets/images/thumbs/g1-locomotion/01.jpg" alt="Unitree G1 humanoid walking forward in MuJoCo">
+            <img data-src="assets/images/thumbs/g1-locomotion/02.jpg" alt="G1 stepping sideways with command velocity arrow">
+            <img data-src="assets/images/thumbs/g1-locomotion/03.jpg" alt="G1 support phase with foot contact markers">
+            <img data-src="assets/images/thumbs/g1-locomotion/04.jpg" alt="G1 walking backward during the distance sequence">
+            <video data-src="assets/videos/g1/card-loop.mp4" loop muted playsinline preload="none"
+                   aria-hidden="true" tabindex="-1"></video>
+            <span class="pc-wip">In progress</span>
+            <span class="pc-hint">Hover to play</span>
+            <div class="pc-dots"><i class="on"></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="pc-body">
+            <div class="pc-type">Reinforcement Learning · Sim-to-Real</div>
+            <div class="pc-title">Unitree G1 · RL Locomotion from Simulation onto the Real Robot</div>
+            <div class="pc-desc">
+              A 29-DoF humanoid trained under a system-ID randomisation curriculum on one laptop GPU, then
+              deployed to the physical robot at 50 Hz — with the limits it hits on hardware measured, not hidden.
+            </div>
+            <div class="pc-go">Full writeup <span>→</span></div>
+          </div>
+        </a>
+
+        <a class="project-card reveal" id="p-kitchen-pick-place" href="projects/kitchen-pick-place.html">
+          <div class="pc-preview" data-interval="1000">
+            <img class="active" src="assets/images/thumbs/kitchen-pick-place/01.jpg" alt="OWLv2 grounding with oriented bounding boxes on kitchen objects">
+            <img data-src="assets/images/thumbs/kitchen-pick-place/02.jpg" alt="Franka Panda executing a pick in the randomised kitchen">
+            <img data-src="assets/images/thumbs/kitchen-pick-place/03.jpg" alt="Command to VLM to execution pipeline demo">
+            <img data-src="assets/images/thumbs/kitchen-pick-place/04.jpg" alt="Forearm camera view of the counter">
+            <video data-src="assets/videos/kitchen/card-loop.mp4" loop muted playsinline preload="none"
+                   aria-hidden="true" tabindex="-1"></video>
+            <span class="pc-wip">In progress</span>
+            <span class="pc-hint">Hover to play</span>
+            <div class="pc-dots"><i class="on"></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="pc-body">
+            <div class="pc-type">VLM Grounding &amp; Manipulation · MuJoCo</div>
+            <div class="pc-title">Kitchen Semantic Pick-and-Place · VLM Grounding into Asymmetric RL</div>
+            <div class="pc-desc">
+              A Panda that follows "put the carrot in the blue bowl". Measured the grounding pipeline first —
+              98% recall, 4.8 mm — then used those numbers as the noise model the policy trains against.
+            </div>
+            <div class="pc-go">Full writeup <span>→</span></div>
+          </div>
+        </a>
+
+        <!-- This card plays a real clip on hover. The four stills below are the
+             fallback: they cycle exactly like every other card if JS is off, if
+             autoplay is blocked, or under prefers-reduced-motion. The video
+             carries data-src so the clip is only fetched once someone hovers. -->
+        <a class="project-card reveal" id="p-faster-dynamic" href="projects/faster-dynamic.html">
+          <div class="pc-preview" data-interval="1000">
+            <img class="active" src="assets/images/thumbs/faster-dynamic/01.jpg" alt="RViz view of occupancy voxels, unknown space and the committed trajectory">
+            <img data-src="assets/images/thumbs/faster-dynamic/02.jpg" alt="Gazebo corridor world with moving wall panels">
+            <img data-src="assets/images/thumbs/faster-dynamic/03.jpg" alt="Convex corridor polyhedra around the planned path">
+            <img data-src="assets/images/thumbs/faster-dynamic/04.jpg" alt="Dynamic forest world in Gazebo">
+            <video data-src="assets/videos/faster/card-loop.mp4" loop muted playsinline preload="none"
+                   aria-hidden="true" tabindex="-1"></video>
+            <span class="pc-hint">Hover to play</span>
+            <div class="pc-dots"><i class="on"></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="pc-body">
+            <div class="pc-type">Motion Planning &amp; Perception · ROS / Gazebo</div>
+            <div class="pc-title">FASTER+Predict · High-Speed Flight Through Moving Obstacles</div>
+            <div class="pc-desc">
+              FASTER's safety proof assumes free space never becomes occupied — moving obstacles break it.
+              Restored the guarantee with a predictor and two-boundary inflation, without touching the MIQP:
+              goal success 6/9 → 9/9.
+            </div>
+            <div class="pc-go">Full analysis <span>→</span></div>
+          </div>
+        </a>
+
         <a class="project-card reveal" id="p-metal-hydride-reactor" href="projects/metal-hydride-reactor.html">
           <div class="pc-preview" data-interval="1000">
             <img class="active" src="assets/images/thumbs/metal-hydride-reactor/01.jpg" alt="Hydride bed temperature field at 50 s">
@@ -427,7 +502,7 @@
   <p>Designed &amp; built by Unni Aditya Mohan · © 2026</p>
 </footer>
 
-<script src="assets/js/main.js?v=3"></script>
+<script src="assets/js/main.js?v=5"></script>
 
 </body>
 </html>

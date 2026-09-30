@@ -17,6 +17,18 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # order controls the prev/next chain and matches the card order on index.html
 PAGES = [
+    ("g1-locomotion", "Unitree G1 · RL Locomotion from Simulation onto the Real Robot",
+     "Reinforcement-learning locomotion for a 29-DoF Unitree G1 humanoid, trained in mjlab / MuJoCo Warp "
+     "under a system-identification randomisation curriculum and deployed to the physical robot at 50 Hz "
+     "over CycloneDDS, with the measured hardware limits written down."),
+    ("kitchen-pick-place", "Kitchen Semantic Pick-and-Place · VLM Grounding into Asymmetric RL",
+     "A Franka Panda in a randomised MuJoCo kitchen that follows natural-language instructions: an OWLv2 "
+     "grounding pipeline measured at 98% recall and 95% grasp validity, whose measured error becomes the "
+     "noise model an asymmetric SAC policy trains against."),
+    ("faster-dynamic", "FASTER+Predict · High-Speed Flight Through Moving Obstacles",
+     "Reproduction of the FASTER trajectory planner in 2-D and in ROS/Gazebo, plus FASTER+Predict: a "
+     "constant-velocity obstacle predictor and two-boundary grid inflation that restores the planner's "
+     "safety guarantee in dynamic environments without modifying its MIQP."),
     ("metal-hydride-reactor", "Metal Hydride Hydrogen Storage Reactor",
      "Transient thermal and reacting porous-media simulation of a 30 bar metal hydride "
      "hydrogen storage vessel in COMSOL, with a fin array trade study against a parasitic mass budget."),
@@ -45,7 +57,7 @@ TEMPLATE = """<!DOCTYPE html>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/main.css?v=3">
+  <link rel="stylesheet" href="../assets/css/main.css?v=5">
 </head>
 <body>
 
@@ -90,7 +102,7 @@ TEMPLATE = """<!DOCTYPE html>
   <p>Designed &amp; built by Unni Aditya Mohan · © 2026</p>
 </footer>
 
-<script src="../assets/js/main.js?v=3"></script>
+<script src="../assets/js/main.js?v=5"></script>
 </body>
 </html>
 """
@@ -105,8 +117,9 @@ def build():
     for i, (slug, title, desc) in enumerate(PAGES):
         frag = open(os.path.join(ROOT, 'content', slug + '.frag'), encoding='utf-8').read()
 
-        # re-root relative asset paths one level up (projects/ -> repo root)
-        frag = re.sub(r'(\b(?:src|href)=")(assets/)', r'\1../\2', frag)
+        # re-root relative asset paths one level up (projects/ -> repo root).
+        # poster= is in here for <video> thumbnails, which would otherwise 404.
+        frag = re.sub(r'(\b(?:src|href|poster)=")(assets/)', r'\1../\2', frag)
 
         links = []
         if i > 0:

@@ -294,6 +294,39 @@ section { padding: 100px 2rem; }
   width: 100%; display: block; aspect-ratio: 16/9; border: none;
 }
 
+/* In-progress banner for live projects — states what is done vs still open,
+   so a reader is never guessing how finished the work is. */
+.wip-banner {
+  margin: 0 2.5rem 2rem; padding: 1rem 1.25rem;
+  border: 1px solid var(--accent-dim); border-left: 3px solid var(--accent);
+  border-radius: 8px; background: var(--accent-soft);
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+.wip-tag {
+  font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); white-space: nowrap;
+  border: 1px solid var(--accent-dim); border-radius: 4px;
+  padding: 0.25rem 0.5rem; margin-top: 0.1rem;
+}
+.wip-text { font-size: 0.85rem; line-height: 1.65; color: var(--text-secondary); }
+.wip-text b { color: var(--text-primary); font-weight: 600; }
+
+/* Side-by-side clips (simulation runs). Falls back to one column on mobile. */
+.video-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem;
+  margin: 0 2.5rem 2rem;
+}
+.video-grid figure { margin: 0; }
+.video-grid video {
+  width: 100%; display: block; border-radius: 8px;
+  background: #0a0a12; border: 1px solid var(--border);
+}
+.video-grid figcaption {
+  margin-top: 0.6rem; font-size: 0.78rem; line-height: 1.5;
+  color: var(--text-muted);
+}
+.video-grid figcaption b { color: var(--text-secondary); font-weight: 600; }
+
 /* Project links bar */
 .project-actions {
   padding: 0 2.5rem 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap;
@@ -520,6 +553,8 @@ footer {
   .featured-tech { padding: 0 1.5rem 1.25rem; }
   .results-section { margin: 0 1.25rem 1.25rem; }
   .project-video { margin: 0 1.25rem 1.25rem; }
+  .video-grid { grid-template-columns: 1fr; gap: 1rem; margin: 0 1.25rem 1.25rem; }
+  .wip-banner { margin: 0 1.25rem 1.25rem; flex-direction: column; gap: 0.6rem; }
   .project-actions { padding: 0 1.25rem 1.5rem; }
   section { padding: 60px 1.25rem; }
   .hero { padding: 100px 1.25rem 60px; }
@@ -679,6 +714,31 @@ footer {
 }
 .project-card:hover .pc-hint { opacity: 0; }
 
+/* Video hover preview — sits on top of the still-frame cycle. The stills stay
+   in the markup as the no-JS / reduced-motion fallback; main.js only reveals
+   and plays the video on hover, and preload="none" keeps it off the initial load. */
+.pc-preview video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0; z-index: 1;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.pc-preview video.playing { opacity: 1; }
+
+/* "In progress" pip on a project card's preview band. */
+.pc-wip {
+  position: absolute; left: 12px; top: 11px; z-index: 3;
+  font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent);
+  background: rgba(10, 10, 18, 0.82); border: 1px solid var(--accent-dim);
+  border-radius: 4px; padding: 0.22rem 0.45rem;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+}
+.pc-wip::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent); flex: none;
+}
+
 /* fallback band for projects with no captured imagery yet — shows a headline number */
 .pc-preview.pc-stat {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -704,6 +764,7 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   .pc-preview img { transition: opacity 0.2s ease; }
   .project-card:hover .pc-preview img.active { transform: none; }
+  .pc-preview video { display: none; }   /* stills only; main.js also skips playback */
 }
 
 @media (max-width: 768px) {

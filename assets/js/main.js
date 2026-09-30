@@ -97,7 +97,8 @@
   document.querySelectorAll('.pc-preview').forEach(function (box) {
     var frames = Array.prototype.slice.call(box.querySelectorAll('img'));
     var dots   = Array.prototype.slice.call(box.querySelectorAll('.pc-dots i'));
-    if (frames.length < 2) return;
+    var video  = box.querySelector('video');
+    if (frames.length < 2 && !video) return;
 
     var card = box.closest('.project-card');
     if (!card) return;
@@ -115,6 +116,7 @@
     }
 
     function show(n) {
+      if (frames.length < 2) return;
       frames[idx].classList.remove('active');
       if (dots[idx]) dots[idx].classList.remove('on');
       idx = (n + frames.length) % frames.length;
@@ -124,12 +126,27 @@
 
     function start() {
       hydrate();
-      if (reduce || timer) return;
+      if (reduce) return;           // stills only, and the video stays hidden
+      if (video) {
+        // src is held in data-src so the landing page never fetches the clip
+        // until someone actually hovers the card.
+        var vs = video.getAttribute('data-src');
+        if (vs) { video.src = vs; video.removeAttribute('data-src'); }
+        video.classList.add('playing');
+        var pp = video.play();
+        if (pp && pp.catch) pp.catch(function () {});   // autoplay blocked: keep stills
+      }
+      if (timer) return;
       timer = setInterval(function () { show(idx + 1); }, period);
     }
 
     function stop() {
       if (timer) { clearInterval(timer); timer = null; }
+      if (video) {
+        video.classList.remove('playing');
+        video.pause();
+        try { video.currentTime = 0; } catch (e) {}
+      }
       show(0);                      // always rest on the first frame
     }
 

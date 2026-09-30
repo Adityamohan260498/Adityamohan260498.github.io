@@ -1,0 +1,7 @@
+# VS Code local state. The C/C++ extension's browse database grows to >1 GB,
+# which GitHub rejects outright — never commit this directory.
+.vscode/
+
+# Python
+__pycache__/
+*.pyc

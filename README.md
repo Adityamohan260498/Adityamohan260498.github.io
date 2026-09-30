@@ -16,6 +16,7 @@ assets/js/main.js           Scroll reveal, mobile nav, hero particles, anchor re
 assets/images/<project>/    Figures, contours, CAD views
 assets/docs/                Source reports and theses linked from the writeups
 assets/images/thumbs/<slug>/  Hover-preview frames  ── GENERATED
+assets/videos/<slug>/       Clips shown on the detail page + card hover loops
 tools/build_project_pages.py  content/*.frag  ->  projects/*.html
 tools/build_thumbs.py         full-size figures  ->  assets/images/thumbs/
 tools/build_resume.py         ->  resume.pdf
@@ -62,6 +63,51 @@ result plots into `assets/images/iss-thermal/`, add an `iss-thermal-control` ent
 to `THUMBS`, re-run the script, and swap that card's `.pc-stat` band for an image
 band copied from one of the other cards.
 
+## Video
+
+There is no ffmpeg on the PATH, but a full static build ships inside the imageio
+wheel and works fine:
+
+```
+FF=$(python3 -c "import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())")
+$FF -i clip.gif -movflags +faststart -an \
+   -vf "scale='min(720,iw)':-2:flags=lanczos,format=yuv420p" \
+   -c:v libx264 -preset slow -crf 30 -profile:v main out.mp4
+```
+
+Convert screen-capture GIFs before committing them — the FASTER clips went from
+49 MB of GIF to 1.7 MB of H.264 at the same visible quality. Crop RViz/Gazebo
+UI panels out while you are there (`crop=iw-54:ih-16:54:16` style).
+
+**On a detail page**, two clips side by side use `.video-grid` (one `<figure>` per
+clip, `<figcaption>` for the caption); a single full-width clip uses
+`.project-video`. Always set `poster=`. Give the one or two clips that carry the
+result `autoplay loop muted playsinline controls`; give everything below the fold
+`controls preload="none"` so it costs nothing until clicked.
+
+Note `poster=` is rewritten to `../assets/...` by `build_project_pages.py` along
+with `src=` and `href=`, so write it repo-relative like everything else.
+
+**On a project card**, a clip can play on hover. Add a `<video>` with `data-src`
+(not `src`) inside `.pc-preview`, after the four `<img>` frames:
+
+```html
+<video data-src="assets/videos/<slug>/card-loop.mp4" loop muted playsinline
+       preload="none" aria-hidden="true" tabindex="-1"></video>
+```
+
+`main.js` fetches and plays it on hover and pauses on leave. Keep the four stills
+in the markup — they are the fallback when JS is off, when autoplay is blocked,
+and under `prefers-reduced-motion`, where the video is never shown at all. Build
+the loop at the band's own aspect ratio (620x300) so nothing is cropped twice:
+
+```
+$FF -i source.mp4 -an -t 10 -vf "crop=iw:ih*0.56:0:ih*0.30,scale=620:300" \
+   -c:v libx264 -crf 33 assets/videos/<slug>/card-loop.mp4
+```
+
+Swap the card's `.pc-hint` text to "Hover to play" so the affordance is honest.
+
 ## Page layout
 
 Section order on `index.html`:
@@ -74,6 +120,32 @@ underneath the cards (`order: 2`). The nav's "Skills" link still resolves, becau
 the `#skills` id sits on the aside.
 
 To edit skills, edit the `.rail-group` blocks in that aside directly.
+
+## In-progress projects
+
+Live projects get two markers, so a reader is never guessing how finished the
+work is:
+
+- **On the card**, a `<span class="pc-wip">In progress</span>` inside
+  `.pc-preview` — renders as a small pip in the top-left of the preview band.
+- **On the detail page**, a `.wip-banner` immediately after `.featured-header`:
+
+```html
+<div class="wip-banner">
+  <span class="wip-tag">In progress</span>
+  <div class="wip-text">
+    <b>Working today:</b> ... <b>Being built now:</b> ...
+  </div>
+</div>
+```
+
+Say what currently works and what is still open, in that order. A negative
+result belongs in the writeup rather than being trimmed out — the kitchen
+project reports a collapsed SAC run with the diagnostic, which is more useful
+to a reader than an omission.
+
+Use `In Progress · <domain>` rather than `Featured · <domain>` in
+`.featured-label`, and an open-ended date (`Sep 2026 – ongoing`).
 
 ## Parked projects
 

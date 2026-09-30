@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<!-- GENERATED FILE: do not edit directly.
+     Source: content/kitchen-pick-place.frag   Rebuild: python tools/build_project_pages.py -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kitchen Semantic Pick-and-Place · VLM Grounding into Asymmetric RL · Unni Aditya Mohan</title>
+  <meta name="description" content="A Franka Panda in a randomised MuJoCo kitchen that follows natural-language instructions: an OWLv2 grounding pipeline measured at 98% recall and 95% grasp validity, whose measured error becomes the noise model an asymmetric SAC policy trains against.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css?v=5">
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════ NAV ════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">ADITYA<span>.</span></a>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════ BACK BAR ════════════════════════════════════════════ -->
+<div class="backbar">
+  <div class="backbar-inner">
+    <a class="back-link" href="../index.html#p-kitchen-pick-place"><span>←</span> All projects</a>
+    <span class="backbar-title">Kitchen Semantic Pick-and-Place · VLM Grounding into Asymmetric RL</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ PROJECT ════════════════════════════════════════════ -->
+<section id="projects" class="project-detail">
+  <div class="section-inner">
+
+    <!-- ──── FEATURED: Kitchen Semantic Pick-and-Place ──── -->
+    <div class="featured-project reveal">
+      <div class="featured-header">
+        <div>
+          <div class="featured-label">In Progress · Vision-Language Grounding &amp; Manipulation</div>
+          <div class="featured-title">Kitchen Semantic Pick-and-Place · VLM Grounding into Asymmetric RL</div>
+          <div class="featured-subtitle">Personal research project · Franka Panda · MuJoCo · OWLv2 · Asymmetric SAC</div>
+        </div>
+        <div class="featured-date">Jul – Aug 2026 · ongoing</div>
+      </div>
+
+      <div class="wip-banner">
+        <span class="wip-tag">In progress</span>
+        <div class="wip-text">
+          <b>Done and measured:</b> the randomised kitchen environment, a scripted expert that solves it,
+          and the full VLM grounding pipeline — 98% recall, 4.8 mm position error, 95% grasp validity on
+          14 scenes / 60 objects. <b>Open:</b> the RL half. The first asymmetric-SAC run collapsed and is
+          reported below as it happened, not cleaned up. Algorithm choice is the live question.
+        </div>
+      </div>
+
+      <div class="featured-desc">
+        A Franka Panda in a randomised MuJoCo kitchen that takes instructions in English —
+        <em>"pick up all the apples"</em>, <em>"put the carrot in the blue bowl"</em>,
+        <em>"move all the red items to the black bowl"</em> — and has to work out what that means about the
+        objects actually in front of it.
+        <br><br>
+        The design constraint that drove everything: <strong>a policy trained on privileged simulator state
+        cannot later be driven by a camera.</strong> It learns to rely on exact poses of occluded objects and
+        perfect labels, and swapping in real perception silently destroys it. So the policy never reads sim
+        state. It reads <em>Detection</em> objects from a perception interface, and the training-time
+        implementation of that interface reads the simulator and then <em>deliberately degrades</em> it —
+        position noise, dropped detections, confused labels.
+        <br><br>
+        Which raises the question that makes this project interesting: <strong>degrade it by how much?</strong>
+        Guessing the noise numbers would make the whole setup theatre. So I built and measured the real VLM
+        grounding pipeline first, then set the noise model from those measurements. The policy trains against
+        a statistical model of a detector I have actually characterised, and deploys against that same
+        detector.
+      </div>
+
+      <div class="featured-tech">
+        <span class="skill-tag">OWLv2 / Open-Vocab Detection</span>
+        <span class="skill-tag">MuJoCo</span>
+        <span class="skill-tag">Asymmetric SAC</span>
+        <span class="skill-tag">Franka Panda</span>
+        <span class="skill-tag">Grasp Synthesis</span>
+        <span class="skill-tag">Point Cloud / PCA</span>
+        <span class="skill-tag">Domain Randomisation</span>
+        <span class="skill-tag">Gymnasium</span>
+        <span class="skill-tag">PyTorch</span>
+      </div>
+
+      <div class="metric-row">
+        <div class="metric">
+          <div class="metric-num">98<small>%</small></div>
+          <div class="metric-label">detection recall over 14 scenes / 60 objects, two fused camera views</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">4.8<small> mm</small></div>
+          <div class="metric-label">mean position error (median 3.2 mm); yaw error 3.7° on elongated objects</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">95<small>%</small></div>
+          <div class="metric-label">of synthesised grasps feasible against the real gripper's limits</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">96<small>%</small></div>
+          <div class="metric-label">scripted-expert episode success over 80 randomised layouts — the task is solvable</div>
+        </div>
+      </div>
+
+      <!-- THE SYSTEM RUNNING -->
+      <div class="video-grid">
+        <figure>
+          <video src="../assets/videos/kitchen/expert-demo.mp4" poster="../assets/images/kitchen/poster-expert.jpg"
+                 autoplay loop muted playsinline controls preload="metadata"></video>
+          <figcaption><b>Scripted expert, full task.</b> The instruction and live progress are overlaid; the
+            insets are the two cameras that feed the policy. This exists to prove the task is solvable before
+            any GPU time is spent — so a failed RL run is unambiguously an RL problem.</figcaption>
+        </figure>
+        <figure>
+          <video src="../assets/videos/kitchen/pipeline-demo.mp4" poster="../assets/images/kitchen/poster-pipeline.jpg"
+                 loop muted playsinline controls preload="none"></video>
+          <figcaption><b>Command → VLM → execution.</b> Language is parsed to a predicate over the catalog,
+            OWLv2 grounds it against what is on the counter, and the resulting detections drive the
+            controller. Nothing here reads simulator state.</figcaption>
+        </figure>
+      </div>
+
+      <!-- ENVIRONMENT -->
+      <div class="spec-block">
+        <div class="block-title">The Environment Is the Experiment</div>
+        <div class="block-sub">Nothing is fixed except the counter and the robot's mounting. A policy cannot memorise a layout because next episode it is a different container, somewhere else, possibly one of two.</div>
+        <div class="spec-grid">
+          <div class="spec-item">
+            <div class="spec-key">Randomised Every Reset</div>
+            <div class="spec-val">3–6 of 9 objects, rejection-sampled position and yaw; source container position, <em>size</em> (0.115–0.150 m) and colour; destination shape (one basket / one bowl / two bowls); kettle obstacle placed between source and destination.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Why the Objects Are Adversarial</div>
+            <div class="spec-val">Of 9 objects, <em>3 are red</em>, <em>3 are orange</em> — and "orange" is also a category — 2 are apples, and 2 round ones are toys not produce. A policy that learns "red → grab" scores 33% on colour queries.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Three Elongated Objects</div>
+            <div class="spec-val">A parallel jaw closes across an object's <em>short</em> axis. Handed only a centroid, it closes along the carrot's length and shoves it away. This is what makes the orientation channel load-bearing rather than decorative.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Action Space</div>
+            <div class="spec-val"><em>Box(&minus;1, 1, (5,))</em> = end-effector deltas [dx, dy, dz, dyaw, gripper], not joint deltas. Joint control would make the policy discover IK before the task, and every open VLA emits EE deltas — so demonstrations fine-tune an action model with no lossy retarget.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Observation</div>
+            <div class="spec-val">392-dim: proprioception (27), per-object slots (9 × 32, <em>zeroed where undetected</em>), containers (4 × 12), obstacle (1 × 6), parsed instruction (23).</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Reward</div>
+            <div class="spec-val">Sparse +1 per correct placement, &minus;1 per misplacement, +5 on success, plus <em>potential-based</em> dense shaping. Potential-based specifically: a raw &minus;distance term provably changes the optimal policy — it pays the agent to hover between two objects forever.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-gallery">
+        <div class="gallery-item">
+          <img src="../assets/images/kitchen/grounding-carrot.png" alt="OWLv2 grounding of the instruction pick up the carrot across both cameras" loading="lazy">
+          <div class="gallery-caption">Grounding "pick up the carrot" — oriented boxes, both cameras fused</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/kitchen/grounding-scene.png" alt="Grounding output on a second randomised scene" loading="lazy">
+          <div class="gallery-caption">A second randomised layout — different container, size and contents</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/kitchen/cam-overhead.png" alt="Overhead camera view of the kitchen counter" loading="lazy">
+          <div class="gallery-caption">overhead_cam at z = 2.05 m — above the elbow, not looking at it</div>
+        </div>
+        <div class="gallery-item">
+          <img src="../assets/images/kitchen/cam-arm.png" alt="Forearm-mounted camera view" loading="lazy">
+          <div class="gallery-caption">arm_cam on link5, 12 cm off centreline — measured, not guessed</div>
+        </div>
+      </div>
+
+      <!-- GROUNDING RESULTS -->
+      <div class="results-section">
+        <div class="results-title">Stage 1 · VLM Grounding, Measured</div>
+        <div class="results-subtitle">14 scenes, 60 objects. Images and a command in; identity, pose, oriented bounding box and a feasible grasp out. Nothing moves.</div>
+        <table class="results-table">
+          <thead>
+            <tr><th>Metric</th><th>Result</th><th>What it bounds</th></tr>
+          </thead>
+          <tbody>
+            <tr class="chosen"><td>Recall</td><td>98%</td><td><span class="sel">◆ sets the policy's dropout rate</span></td></tr>
+            <tr><td>Position error</td><td>4.8 mm (median 3.2)</td><td>sets position noise σ</td></tr>
+            <tr><td>Size error per axis</td><td>4.2 mm</td><td>extent noise</td></tr>
+            <tr><td>Yaw error, elongated objects</td><td>3.7°</td><td>sets yaw noise σ</td></tr>
+            <tr class="chosen"><td>Grasp validity</td><td>95%</td><td><span class="sel">◆ end-to-end usefulness</span></td></tr>
+            <tr><td>Label accuracy</td><td>76% (90% excl. orange pair)</td><td>sets label-confusion rate</td></tr>
+          </tbody>
+        </table>
+        <div class="results-note">
+          <strong>Known limit, stated because it is systematic rather than random:</strong> the orange fruit
+          and the orange ball are 54 mm and 50 mm spheres of near-identical hue, separated only by a pebbled
+          texture that is not resolved at 768 px. The pipeline gets this pair wrong essentially always — and
+          reports low identity confidence when it does. That single pair is the entire gap between 76% and 90%.
+        </div>
+      </div>
+
+      <div class="results-section">
+        <div class="results-title">Why Identity Needed Three Independent Sources</div>
+        <div class="results-subtitle">The detector's own labels were not just inaccurate, they were wrong <em>systematically</em>: red apple → "red ball", orange → "orange ball".</div>
+        <table class="results-table">
+          <thead>
+            <tr><th>Identity pipeline</th><th>Label accuracy</th><th>What the added source contributes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Detector label alone</td><td>20%</td><td>&mdash;</td></tr>
+            <tr><td>+ re-classify on an upscaled crop</td><td>60%</td><td>resolution, not reasoning</td></tr>
+            <tr><td>+ calibrated shape prior</td><td>66%</td><td>metric extent — squat tomato vs round apple</td></tr>
+            <tr><td>+ colour coverage</td><td>74%</td><td>decisive between hue-separated objects, silent within a hue</td></tr>
+            <tr class="chosen"><td>+ shape weighted above appearance</td><td><span class="sel">◆ 83%</span></td><td>geometry is measured, appearance is inferred</td></tr>
+          </tbody>
+        </table>
+        <div class="results-note">
+          Each source contributes what the others cannot. Shape is the only thing separating a squat tomato
+          from a round apple; colour is decisive between hue-separated objects and deliberately silent between
+          same-coloured ones; appearance carries gross category. The final ordering — shape above appearance —
+          is the single largest jump in the ablation.
+        </div>
+      </div>
+
+      <!-- THE LINKING IDEA -->
+      <div class="spec-block">
+        <div class="block-title">The Two Stages Are Linked by Measurement</div>
+        <div class="block-sub">A VLM cannot run inside an RL loop — OWLv2 costs ~0.5 s per frame against millions of training steps. So the policy trains against a model of the detector and deploys against the detector.</div>
+        <div class="findings">
+          <div class="finding"><span class="finding-n">01</span><span>
+            <b>The noise constants are not tuned, they are transcribed.</b>
+            <em>position_noise_std = 0.005</em> because position error measured 4.8 mm.
+            <em>yaw_noise_std = 0.065</em> because yaw error measured 3.7°.
+            <em>label_noise_prob = 0.22</em> because label accuracy measured 76%.
+            <em>dropout_prob = 0.03</em> because recall measured 98%. The substitution is only honest if the
+            model matches reality, so the evaluation above is what sets them.
+          </span></div>
+          <div class="finding"><span class="finding-n">02</span><span>
+            <b>Label confusion is structured, not uniform.</b> A real detector never confuses a green apple
+            with a red ball — it confuses red apple ↔ red tomato ↔ red ball, and orange ↔ orange ball.
+            Injecting uniform label noise would teach the policy that labels are useless; injecting the
+            <em>actual</em> confusion structure teaches it to fall back on the shape cues the meshes carry.
+          </span></div>
+          <div class="finding"><span class="finding-n">03</span><span>
+            <b>Yaw noise scales with roundness.</b> For a sphere the principal axis is genuinely
+            <em>undefined</em>, not merely noisy. So the error is divided by (aspect &minus; 1): the carrot
+            gets an accurate yaw, the spheres get something near-uniform plus an orientation confidence of 0
+            that says "do not use this."
+          </span></div>
+          <div class="finding"><span class="finding-n">04</span><span>
+            <b>Orientation is encoded as cos 2θ / sin 2θ, not θ.</b> A parallel jaw is symmetric under a half
+            turn, so a carrot at +80° and one at &minus;100° need the <em>same</em> wrist angle. Feeding the
+            raw angle makes two identical situations look maximally different and puts a discontinuity at
+            ±90°, in the middle of the useful range.
+          </span></div>
+          <div class="finding"><span class="finding-n">05</span><span>
+            <b>The boundary is enforced by naming, so it is auditable.</b> Privileged fields are
+            <code>true_*</code>, camera-derived fields are <code>camera_*</code>. Checking that the VLM path
+            never touches privileged state is one grep, which means it actually gets checked.
+          </span></div>
+        </div>
+      </div>
+
+      <!-- RL STATUS -->
+      <div class="results-section">
+        <div class="results-title">Stage 2 · Asymmetric SAC — First Run, and Why It Failed</div>
+        <div class="results-subtitle">Actor sees the 392-dim noisy camera-derived observation. Critic additionally sees 156 dims of exact scene state, and is discarded at deployment.</div>
+        <table class="results-table">
+          <thead>
+            <tr><th>Quantity</th><th>At 100k steps</th><th>At 5.1M steps</th><th>Reading</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Success rate</td><td>0%</td><td>0%</td><td>never solved an episode</td></tr>
+            <tr><td>Objects placed</td><td>0%</td><td>0%</td><td>&mdash;</td></tr>
+            <tr><td>Eval return</td><td>&minus;11.3</td><td>&minus;5.1</td><td>learned to avoid penalties, not to succeed</td></tr>
+            <tr class="chosen"><td>Entropy coefficient α</td><td>0.0070</td><td>&lt; 1e&minus;6</td><td><span class="sel">◆ exploration switched itself off</span></td></tr>
+            <tr><td>Critic loss</td><td>0.18</td><td>~0.0001</td><td>confidently fitting a flat value function</td></tr>
+            <tr><td>Q estimate</td><td>17.8</td><td>&minus;1.1</td><td>collapsed to the no-op return</td></tr>
+          </tbody>
+        </table>
+        <div class="results-note">
+          <strong>This is a real negative result, left in.</strong> α decaying to zero while success stays at
+          0% is the diagnostic: SAC's automatic temperature tuning drove entropy down because the critic saw
+          no reason to keep exploring, and a critic with no terminal rewards to regress on has nothing to
+          learn except "everything is worth about &minus;1." Success is ~350 control steps of precise
+          sequencing, which random exploration essentially never completes. The intended fix — seeding the
+          replay buffer with scripted-expert episodes so the critic has real terminal rewards from the start —
+          is implemented but had not been exercised in this run. Curriculum order (starting on
+          <em>KitchenReach-v0</em> rather than the full task) is the other lever.
+        </div>
+      </div>
+
+      <div class="project-gallery gallery-4" style="grid-template-columns: 1fr">
+        <div class="gallery-item" style="aspect-ratio: 16/7">
+          <img src="../assets/images/kitchen/sac-collapse.png" alt="SAC training curve showing entropy coefficient collapse with flat zero success" loading="lazy">
+          <div class="gallery-caption">Return recovers toward the no-op baseline while α collapses — the signature of exploration shutting down</div>
+        </div>
+      </div>
+
+      <!-- HARD-WON -->
+      <div class="spec-block">
+        <div class="block-title">Measured, Not Guessed</div>
+        <div class="block-sub">Each of these was a real bug or a wrong answer at some point, and each would be easy to silently reintroduce.</div>
+        <div class="findings">
+          <div class="finding"><span class="finding-n">01</span><span>
+            <b>A hardcoded workspace clamp made an entire container unreachable.</b> The commanded-TCP box
+            started at <em>x ≥ 0.20</em>, but the secondary source bowl sits at 46–68° where <em>x</em> drops
+            to 0.11 — so every object in it was kinematically reachable and <em>forbidden by the environment</em>.
+            The arm stalled against the limit, nothing raised an error, and it presented as a grasping failure.
+            Worth <em>5 points of expert success</em>. The box is now derived from the layout constants, with a
+            test asserting every spawned object falls inside it.
+          </span></div>
+          <div class="finding"><span class="finding-n">02</span><span>
+            <b>Grasp detection needed hysteresis.</b> A held capsule rolls slightly and one pad can break
+            contact for a single frame. With a strict two-finger test every step, the carrot was "dropped"
+            mid-lift on three consecutive attempts at exactly its correct 29 mm jaw width. Acquiring needs
+            both fingers; <em>keeping</em> needs one plus proximity. This one fix took the expert from
+            <em>86% → 94%</em> episodes.
+          </span></div>
+          <div class="finding"><span class="finding-n">03</span><span>
+            <b>Tuning on an isolated object was anti-correlated with the real distribution.</b> An
+            isolated-object grasp sweep picked a &minus;0.012 offset as a clean 100%. On crowded six-object
+            episodes that same offset scores <em>25%</em>. Not noisy — pointing the wrong way.
+          </span></div>
+          <div class="finding"><span class="finding-n">04</span><span>
+            <b>Camera placement was solved and scored, not eyeballed.</b> The Panda's elbow rides at
+            <em>z ≈ 1.55 m</em>, so an overhead camera at 1.62 m renders almost nothing but robot; at 2.05 m
+            the elbow is 35° off-axis and out of frame. The arm camera sits on <em>link5</em>, not the gripper —
+            an eye-in-hand camera dives at whatever it reaches for, while a forearm camera keeps the other
+            candidates in view, which <em>"all the red items"</em> needs. On-centre it stares into its own
+            wrist (49% of frame is robot, 3/6 objects visible); 12 cm off the centreline gives 6/6.
+          </span></div>
+          <div class="finding"><span class="finding-n">05</span><span>
+            <b>Freeze waypoints during grasp and lift.</b> Tracking an object's <em>live</em> position while
+            the jaws close makes the arm chase what it just nudged — 23 mm of lateral drag, which shears thin
+            objects out of the pinch.
+          </span></div>
+          <div class="finding"><span class="finding-n">06</span><span>
+            <b>Model-level randomisation compounds.</b> <code>mj_resetData</code> restores <em>data</em>, not
+            <em>model</em>, so <code>geom_size *= scale</code> shrinks a basket to nothing over ten resets.
+            Every geometric write now comes from a pristine snapshot.
+          </span></div>
+        </div>
+      </div>
+
+      <!-- ATTRIBUTION -->
+      <div class="credit-bar">
+        <div class="credit mine">
+          <div class="credit-who">My contribution</div>
+          <div class="credit-what">
+            The whole system: procedurally generated kitchen scene and object meshes, the randomised layout
+            sampler, the semantics catalog and instruction parser, the privileged/unprivileged perception
+            boundary, the OWLv2 grounding pipeline through to grasp synthesis, the scripted FSM expert, the
+            observation encoders, the asymmetric SAC implementation, and the measurement tooling that set the
+            noise model.
+          </div>
+        </div>
+        <div class="credit">
+          <div class="credit-who">Upstream</div>
+          <div class="credit-what">
+            Franka Panda model from MuJoCo Menagerie (Apache-2.0), with 9 documented local modifications —
+            the stock gripper is ~1.4 N per finger, stiffened 6× with <code>gainprm</code> rescaled to
+            preserve the ctrl→position mapping. OWLv2 detector weights, used frozen.
+          </div>
+        </div>
+      </div>
+
+      <div class="project-actions"></div>
+    </div>
+
+    <nav class="page-nav" aria-label="Project navigation">
+      <a href="g1-locomotion.html">← Unitree G1 · RL Locomotion from Simulation onto the Real Robot</a>
+      <a href="faster-dynamic.html">FASTER+Predict · High-Speed Flight Through Moving Obstacles →</a>
+    </nav>
+
+  </div>
+</section>
+
+<footer>
+  <p>Designed &amp; built by Unni Aditya Mohan · © 2026</p>
+</footer>
+
+<script src="../assets/js/main.js?v=5"></script>
+</body>
+</html>

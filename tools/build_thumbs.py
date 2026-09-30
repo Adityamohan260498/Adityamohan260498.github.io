@@ -24,6 +24,24 @@ BOX = (620, 300)     # crop box — cards show a 2.07:1 letterbox band
 
 # slug -> ordered list of source images (repo-relative)
 THUMBS = {
+    "g1-locomotion": [
+        "assets/images/g1/seq-1.jpg",
+        "assets/images/g1/seq-2.jpg",
+        "assets/images/g1/seq-3.jpg",
+        "assets/images/g1/seq-4.jpg",
+    ],
+    "kitchen-pick-place": [
+        "assets/images/kitchen/grounding-carrot.png",
+        "assets/images/kitchen/expert-still.jpg",
+        "assets/images/kitchen/pipeline-still.jpg",
+        "assets/images/kitchen/cam-arm.png",
+    ],
+    "faster-dynamic": [
+        "assets/images/faster/rviz-forest.jpg",
+        "assets/images/faster/gazebo-corridor.jpg",
+        "assets/images/faster/rviz-corridor.jpg",
+        "assets/images/faster/gazebo-forest.jpg",
+    ],
     "metal-hydride-reactor": [
         "assets/images/hydrogen-storage/bed-temp-50s.jpg",
         "assets/images/hydrogen-storage/bed-temp-200s.jpg",
