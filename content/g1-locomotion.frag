@@ -22,24 +22,17 @@
       </div>
 
       <div class="featured-desc">
-        A humanoid locomotion policy is not one problem, it is two stacked. The low level has to keep a
-        29-DoF biped upright while tracking a commanded body-frame twist. The level above has to decide what
-        that twist should be. Most published work stops at the first, ships a policy that takes
-        <em>(v<sub>x</sub>, v<sub>y</sub>, ω<sub>z</sub>)</em>, and leaves the robot with no way to be told
-        <em>"go over there"</em> — and, more often than not, never leaves simulation at all.
+        Most published humanoid locomotion stops at a policy that tracks a commanded body-frame twist, and
+        more often than not never leaves simulation. I trained one in <strong>mjlab</strong>, a MuJoCo-Warp RL
+        framework, for 30 000 PPO iterations on a single 8 GB laptop GPU — then got it onto the real
+        29-DoF machine.
         <br><br>
-        I trained the policy in <strong>mjlab</strong>, a MuJoCo-Warp RL framework, through 30 000 PPO
-        iterations on one 8 GB laptop GPU. The version that matters is the second one: trained under a
-        <strong>system-identification curriculum</strong> that randomises joint friction, damping, armature,
-        actuator effort limits and PD gains, and <em>widens</em> those ranges as the policy proves it can
-        cope. That is what makes the transfer survive — a policy tuned to MuJoCo's exact joint model has
-        nothing to fall back on when the real gearbox behaves differently.
-        <br><br>
-        It then goes onto the robot: ONNX export carrying its own gains and default pose as metadata, a
-        50 Hz control loop over CycloneDDS to the G1's low-level interface, and a tilt watchdog that drops to
-        damping if the pelvis goes past ~53°. <strong>The interesting part is not that it walks — it is the
-        list of things it does worse on hardware than in simulation,</strong> which is measured and written
-        down below rather than left out.
+        The version that transferred is the second one, trained under a <strong>system-identification
+        curriculum</strong>: joint friction, damping, armature, actuator effort limits and PD gains are
+        randomised per episode, and the ranges come from <em>chirp sweeps measured on the actual robot</em>
+        rather than from guesswork. <strong>The interesting part is not that it walks — it is the list of
+        things it does worse on hardware than in simulation</strong>, which is measured and written down
+        below rather than left out.
       </div>
 
       <div class="featured-tech">
@@ -81,7 +74,8 @@
           <figcaption><b>Simulation.</b> The scripted distance sequence in mjlab — 2 m forward, 1 m back,
             0.5 m right, 0.5 m left, 1 m back, with two-second holds between moves. The blue arrow is the
             commanded twist, the magenta markers are foot contacts. This is the run the move durations were
-            calibrated from.</figcaption>
+            calibrated from — and the recorder reads the command schedule out of the robot script rather than
+            keeping its own copy, so the two sides cannot silently drift apart.</figcaption>
         </figure>
         <figure>
           <video src="assets/videos/g1/distance-sequence-real.mp4" poster="assets/images/g1/poster-distance-real.jpg"
@@ -107,20 +101,12 @@
             <div class="spec-val">96-dim: gyro (3) + projected gravity (3) + joint position error (29) + joint velocity (29) + previous action (29) + command (3). Action is 29 joint targets, applied as <em>q = q<sub>default</sub> + scale · a</em>. No height, no velocity estimate, nothing the real robot cannot measure.</div>
           </div>
           <div class="spec-item">
-            <div class="spec-key">System-ID Randomisation</div>
-            <div class="spec-val">Per-episode resampling of joint friction, damping and armature, actuator effort limits, and PD gains across six actuator groups — with the <em>ranges themselves</em> on a curriculum that widens them as the policy holds up.</div>
-          </div>
-          <div class="spec-item">
             <div class="spec-key">Command Curriculum</div>
             <div class="spec-val">Command ranges widen as tracking error stays in tolerance: <em>v<sub>x</sub></em> [&minus;1, 1] → [&minus;2, 3] m/s, yaw rate 0.5 → 0.7 rad/s. That yaw ceiling turns out to matter a great deal — see the limits below.</div>
           </div>
           <div class="spec-item">
             <div class="spec-key">Run</div>
             <div class="spec-val">30 000 iterations, ~37 800 simulation steps/s. Mean reward &minus;1.26 → 41.9; mean episode length 12.9 → 994.8 steps against a 1000-step cap; fall terminations 0.04.</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-key">Export</div>
-            <div class="spec-val">ONNX, with joint names, stiffness, damping, default pose and action scale written into the model metadata — so the deployment script reads its gains off the policy instead of keeping a second copy that can drift out of sync.</div>
           </div>
         </div>
       </div>
@@ -154,20 +140,12 @@
             <div class="spec-val">50 Hz (2 ms sim step × 4 decimation). Read low state → assemble the 96-dim observation → ONNX Runtime on CPU → 29 position targets with the policy's own kp/kd → publish with CRC.</div>
           </div>
           <div class="spec-item">
-            <div class="spec-key">Two Python Environments</div>
-            <div class="spec-val">mjlab runs on Python 3.13; CycloneDDS 0.10 will not build there. The robot side is a separate 3.10 venv with <em>unitree_sdk2py</em>, <em>onnxruntime</em> and <em>pynput</em>. ONNX is what lets those two worlds share a policy without sharing an interpreter.</div>
-          </div>
-          <div class="spec-item">
             <div class="spec-key">Safety</div>
             <div class="spec-val">A <em>--dry-run</em> mode that reads sensors and runs the policy but publishes nothing; START moves smoothly to the default pose over 3 s before anything else; a tilt watchdog drops to damping if projected gravity says the pelvis is past ~53°; SELECT and Ctrl+C both land in damping.</div>
           </div>
           <div class="spec-item">
             <div class="spec-key">Three Ways to Drive It</div>
             <div class="spec-val">Remote-stick teleop, laptop keyboard hold-to-move (X11 global key capture, so it works from any window), and scripted timed sequences for repeatable demos and for filming.</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-key">Sim Recorder</div>
-            <div class="spec-val">The same schedule file drives both the robot and a headless mjlab recording, parsed out of the script rather than duplicated — so the simulation video and the hardware run are provably the same command sequence.</div>
           </div>
         </div>
       </div>
@@ -295,36 +273,23 @@
         <div class="block-sub">The things that were not obvious until the policy was on a real machine.</div>
         <div class="findings">
           <div class="finding"><span class="finding-n">01</span><span>
-            <b>Randomising the physics is not enough — the range has to be on a curriculum too.</b>
-            Opening joint friction, damping and armature to their final width from step zero gives a policy
-            that never learns to walk at all, because no consistent gait works across the whole band. Starting
-            narrow and widening as episodes survive means the policy learns a gait first and then learns to
-            make it robust. Friction ended 2.1× wider than it began, and torque authority was pulled down to
-            80% of nominal.
-          </span></div>
-          <div class="finding"><span class="finding-n">02</span><span>
             <b>Put the gains inside the exported model.</b> kp, kd, the default pose and the action scale are
             written into the ONNX metadata and read back at deploy time. The alternative — a constants block
-            in the deployment script — is a second source of truth for numbers that must match the training
-            environment exactly, and it will drift the first time a policy is retrained.
+            in the deployment script — is a second source of truth for numbers that must match training
+            exactly, and it will drift the first time a policy is retrained.
+          </span></div>
+          <div class="finding"><span class="finding-n">02</span><span>
+            <b>The observation was designed backwards from the robot.</b> Gyro, projected gravity, joint
+            positions and velocities, previous action — all of it comes out of one low-state packet. No base
+            linear velocity, no height, no privileged state. A policy that consumes anything else needs a
+            state estimator before it can be deployed at all, which is exactly why policy #1 required a
+            velocity source on hardware and policy #3 did not.
           </span></div>
           <div class="finding"><span class="finding-n">03</span><span>
-            <b>The observation was designed backwards from the robot.</b> Gyro, projected gravity, joint
-            positions and velocities, and the previous action — all of it is available from one low-state
-            packet. No base linear velocity, no height above ground, no privileged state. A policy that
-            consumes anything else is a policy that needs a state estimator before it can be deployed at all.
-          </span></div>
-          <div class="finding"><span class="finding-n">04</span><span>
-            <b>Drive both the robot and the recorder from one schedule file.</b> The sim recorder parses the
-            command sequence out of the robot script rather than keeping its own copy, so the comparison video
-            cannot silently drift from what the hardware was actually asked to do. It is a small thing that
-            makes a side-by-side comparison mean something.
-          </span></div>
-          <div class="finding"><span class="finding-n">05</span><span>
             <b>Open-loop distance is good enough to be useful and bad enough to be honest.</b> There is no
             position feedback anywhere in this stack: each move is a commanded velocity held for a duration
-            calibrated in simulation. That lands within about ±0.3 m over a 2 m move. Fine for a demo,
-            nowhere near enough for navigation — which is what the mapping work is for.
+            calibrated in simulation. That lands within about ±0.3 m over a 2 m move — fine for a demo,
+            nowhere near enough for navigation, which is what the mapping work is for.
           </span></div>
         </div>
       </div>

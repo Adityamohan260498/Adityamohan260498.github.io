@@ -25,10 +25,10 @@ PAGES = [
      "Reinforcement-learning locomotion for a 29-DoF Unitree G1 humanoid, trained in mjlab / MuJoCo Warp "
      "under a system-identification randomisation curriculum and deployed to the physical robot at 50 Hz "
      "over CycloneDDS, with the measured hardware limits written down."),
-    ("kitchen-pick-place", "Kitchen Semantic Pick-and-Place · VLM Grounding into Asymmetric RL",
-     "A Franka Panda in a randomised MuJoCo kitchen that follows natural-language instructions: an OWLv2 "
-     "grounding pipeline measured at 98% recall and 95% grasp validity, whose measured error becomes the "
-     "noise model an asymmetric SAC policy trains against."),
+    ("kitchen-pick-place", "GRASP · Language-Conditioned Sequential Manipulation",
+     "A Franka Panda in a randomised MuJoCo kitchen that resolves natural-language commands to object sets: "
+     "an OWLv2 grounding stack measured at 4.7 mm position error and 98% grasp validity, a scripted expert "
+     "at 97.3% over 700 episodes, and an end-to-end referring accuracy of 69%."),
     ("faster-dynamic", "FASTER+Predict · High-Speed Flight Through Moving Obstacles",
      "Reproduction of the FASTER trajectory planner in 2-D and in ROS/Gazebo, plus FASTER+Predict: a "
      "constant-velocity obstacle predictor and two-boundary grid inflation that restores the planner's "

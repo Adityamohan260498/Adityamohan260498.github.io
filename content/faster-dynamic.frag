@@ -91,20 +91,12 @@
             <div class="spec-val">Quadrotor with an Asus Xtion Pro depth camera (90° HFoV, 320×240, 60 Hz, 7 m range). Triple-integrator dynamics, <em>v</em><sub>max</sub> = 5 m/s, <em>a</em><sub>max</sub> = 5 m/s², <em>j</em><sub>max</sub> = 8 m/s³. Start (2, 0, 0.3) → goal (68, 0, 1).</div>
           </div>
           <div class="spec-item">
-            <div class="spec-key">Mapping &amp; Planning</div>
-            <div class="spec-val">Depth cloud fused into a 0.15 m voxel grid at 20 Hz by the global mapper. JPS for the global path, convex decomposition into overlapping polyhedra, MIQP solved twice per cycle (Whole + Safe) in Gurobi.</div>
-          </div>
-          <div class="spec-item">
             <div class="spec-key">Prediction</div>
             <div class="spec-val">Constant-velocity model with EMA-smoothed finite differencing, α = 0.7. Sensing radius <em>R<sub>s</sub></em> = 10 m; only the <em>N</em><sub>near</sub> = 4 closest obstacles are inflated, to keep the corridor from being choked by obstacles that do not matter yet.</div>
           </div>
           <div class="spec-item">
             <div class="spec-key">Inflation Constants</div>
             <div class="spec-val"><em>K</em> = 0.2, δ<sub>min</sub> = 0.05 m, δ<sub>max</sub> = 0.3 m, Δ<em>s</em> = 0.4 m, voxel resolution <em>r<sub>v</sub></em> = 0.15 m. Augmented grids republished at 50 Hz, faster than the mapper, so the prediction stays ahead of the map.</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-key">Campaign</div>
-            <div class="spec-val">9 independent trials per arm, cylinder phase randomized between runs, 90 s cap. Collision monitor logs every drone–cylinder overlap with timestamp and obstacle ID; the whole 18-run sweep runs unattended in Docker.</div>
           </div>
         </div>
       </div>
@@ -295,23 +287,6 @@
             Inflating all eight filled the corridor with predicted-occupied voxels, JPS could not find a global
             path, and the planner had nothing to optimize inside. Capping at <em>N</em><sub>near</sub> = 4
             within <em>R<sub>s</sub></em> = 10 m keeps the free space the MIQP needs to exist.
-          </span></div>
-          <div class="finding"><span class="finding-n">04</span><span>
-            <b>Reproducing the static baseline first was the load-bearing decision.</b> The 2-D study showed
-            vanilla FASTER already achieving the lowest collision rate of six methods under moving obstacles,
-            with no dynamic model. That told me the replanning loop was sound and the gap was purely
-            informational — which is why the fix belonged in perception, and why a 200-line predictor node was
-            the right size of change rather than a reformulated optimizer.
-          </span></div>
-          <div class="finding"><span class="finding-n">05</span><span>
-            <b>What this result is not.</b> Obstacle positions are read from the simulator's model-state
-            channel and passed through the same velocity filter a real tracker would use, rather than from
-            point-cloud clustering — the stock mapper decays stale voxels at &minus;0.01 per miss and leaves
-            trails behind moving obstacles that corrupt centroids. That isolates the inflation model from a
-            mapping artifact, but it does mean <em>perception is assumed solved</em>. Collisions are also not
-            eliminated: residual contacts concentrate where a cylinder sits near the wall and leaves no
-            passable gap, or where turnaround acceleration briefly exceeds the
-            <em>a</em><sub>obs,max</sub> ≈ 1.1 m/s² the margin in Δs was sized for.
           </span></div>
         </div>
       </div>

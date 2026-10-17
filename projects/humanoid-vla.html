@@ -151,16 +151,12 @@
             <div class="spec-val">26 phone clips at 4K/60 fps, filmed at eye level, plus ChArUco calibration video. ArUco markers give the table frame. Camera calibration came out at 1.31 px RMS. <em>18 of the 26 clips</em> yield a usable hand track.</div>
           </div>
           <div class="spec-item">
+            <div class="spec-key">Policy</div>
+            <div class="spec-val">SmolVLA 450M fine-tuned from <em>lerobot/smolvla_base</em> on one 8 GB laptop GPU. In: head and wrist cameras, the hand state, the text instruction. Out: chunks of 5-D hand-pose actions, re-planned every 0.2 s.</div>
+          </div>
+          <div class="spec-item">
             <div class="spec-key">Perception</div>
             <div class="spec-val">MediaPipe's 21 hand landmarks → the pinch point (thumb-tip / index-tip midpoint) in 3-D, hand yaw, grip aperture, and the grasp / release moments detected from when the block starts and stops moving. Monocular depth from MediaPipe's metric hand model plus PnP, one scale per clip.</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-key">Policy</div>
-            <div class="spec-val">SmolVLA 450M fine-tuned from <em>lerobot/smolvla_base</em>. Inputs: head camera, wrist camera, the hand state, and the text instruction. Output: chunks of 5-D hand-pose actions, re-planned every 5 steps (0.2 s).</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-key">Compute</div>
-            <div class="spec-val">One 8 GB RTX 4060 laptop GPU for everything — the leg policy, every SmolVLA fine-tune and every RL round.</div>
           </div>
         </div>
       </div>
@@ -307,10 +303,6 @@
             frame's advantage is the step up it achieved. Frames are then sampled ∝ exp(A). On one laptop GPU
             that is far cheaper than training a value network, and there is nothing to diverge.
           </span></div>
-          <div class="finding"><span class="finding-n">03</span><span>
-            <b>Extra negative credit for the second before the block topples.</b> Knocking the block over is
-            the failure that a success-only signal notices far too late.
-          </span></div>
         </div>
       </div>
 
@@ -336,16 +328,6 @@
             <b>Doubling the demonstrations did nothing.</b> 572 → 1151 head-camera demos moved success from
             45% to 42%. More of the same data does not fix a perception limit.
           </span></div>
-          <div class="finding"><span class="finding-n">04</span><span>
-            <b>The wrist camera alone did not help at first</b> (43%). My demonstrations never show a
-            <em>correction</em> — "the hand is 3 cm off, move it" — because the scripted grasp uses the true
-            block pose and so is never wrong. The camera only paid off once RL had rollouts to re-weight.
-            That is what points at DAgger-style correction data as the next step rather than more RL.
-          </span></div>
-          <div class="finding"><span class="finding-n">05</span><span>
-            <b>Blocks lying on their side are not handled.</b> 10 of my 26 clips show this; the Dex3 would
-            need an arm pose extreme enough to make the legs step.
-          </span></div>
         </div>
       </div>
 
@@ -363,11 +345,6 @@
             <b>A wrist camera on my own hand while filming.</b> The robot's wrist camera gave the single
             biggest gain; a matching view in the human data would supply it from my recordings rather than
             only from simulation.
-          </span></div>
-          <div class="finding"><span class="finding-n">03</span><span>
-            <b>Replace the scripted grasp and place with my own motion.</b> With the two above, my motion can
-            cover the last 14 cm and the placement too — taking the demonstrations from 54% mine to 100% mine.
-            IK stays, because it only converts a hand pose into joint angles.
           </span></div>
         </div>
       </div>

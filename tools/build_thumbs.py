@@ -37,10 +37,10 @@ THUMBS = {
         "assets/images/g1/seq-4.jpg",
     ],
     "kitchen-pick-place": [
-        "assets/images/kitchen/grounding-carrot.png",
-        "assets/images/kitchen/expert-still.jpg",
-        "assets/images/kitchen/pipeline-still.jpg",
-        "assets/images/kitchen/cam-arm.png",
+        "assets/images/kitchen/card-1.jpg",
+        "assets/images/kitchen/card-2.jpg",
+        "assets/images/kitchen/card-3.jpg",
+        "assets/images/kitchen/card-4.jpg",
     ],
     "faster-dynamic": [
         "assets/images/faster/rviz-forest.jpg",

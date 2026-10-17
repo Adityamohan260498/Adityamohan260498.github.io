@@ -274,6 +274,8 @@
 
         <a class="project-card reveal" id="p-g1-locomotion" href="projects/g1-locomotion.html">
           <div class="pc-preview" data-interval="1000">
+            <!-- Simulation footage only. The real-robot video lives on the project
+                 page, where it has room and a caption. -->
             <img class="active" src="assets/images/thumbs/g1-locomotion/01.jpg" alt="Unitree G1 humanoid walking forward in MuJoCo">
             <img data-src="assets/images/thumbs/g1-locomotion/02.jpg" alt="G1 stepping sideways with command velocity arrow">
             <img data-src="assets/images/thumbs/g1-locomotion/03.jpg" alt="G1 support phase with foot contact markers">
@@ -308,11 +310,11 @@
             <div class="pc-dots"><i class="on"></i><i></i><i></i><i></i></div>
           </div>
           <div class="pc-body">
-            <div class="pc-type">VLM Grounding &amp; Manipulation · MuJoCo</div>
-            <div class="pc-title">Kitchen Semantic Pick-and-Place · VLM Grounding into Asymmetric RL</div>
+            <div class="pc-type">Language Grounding &amp; Manipulation · MuJoCo</div>
+            <div class="pc-title">GRASP · Language-Conditioned Sequential Manipulation</div>
             <div class="pc-desc">
-              A Panda that follows "put the carrot in the blue bowl". Measured the grounding pipeline first —
-              98% recall, 4.8 mm — then used those numbers as the noise model the policy trains against.
+              A Panda that follows "put the carrot in the blue bowl". Grounding measured at 4.7 mm and 98%
+              grasp validity — and an end-to-end referring score of 69% that bounds the whole system.
             </div>
             <div class="pc-go">Full writeup <span>→</span></div>
           </div>
