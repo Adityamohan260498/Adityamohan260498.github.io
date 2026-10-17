@@ -19,23 +19,32 @@
         </div>
       </div>
 
-      <div class="featured-desc">
-        The brief was that <strong>my own data has to drive the robot</strong>. So I filmed myself 26 times
-        picking up a block and standing it on a star, tracked my hand with MediaPipe, and turned
-        <em>my hand's path</em> — where it goes, how it turns, when it closes and opens, and how fast — into
-        motion for a Unitree G1 with a Dex3-1 hand in MuJoCo. Those replays become demonstrations, the
-        demonstrations fine-tune SmolVLA, and the VLA is then improved with reinforcement learning on its own
-        rollouts.
-        <br><br>
-        Two choices shaped everything. First, <strong>the VLA outputs a hand pose in the table frame, not
-        joint angles.</strong> The robot stands on its own legs and its pelvis sways several centimetres
-        whenever the arm moves, so a joint-space action means something different depending on how the body
-        has drifted; a grasp-centre pose means the same thing always, and IK from the current torso pose turns
-        it into joints. Second, <strong>the block is held by contact and friction only</strong> — no welds, no
-        attachment constraints. That makes the grasp a real physical event that can fail, and most of the
-        remaining failures are exactly that.
-        <br><br>
-        <strong>The VLA is never told where the block is.</strong> It has to find it in the camera images.
+      <div class="intro-split">
+        <div class="featured-desc">
+          The brief was that <strong>my own data has to drive the robot</strong>. So I filmed myself 26 times
+          picking up a block and standing it on a star, tracked my hand with MediaPipe, and turned
+          <em>my hand's path</em> — where it goes, how it turns, when it closes and opens, and how fast — into
+          motion for a Unitree G1 with a Dex3-1 hand in MuJoCo. Those replays become demonstrations, the
+          demonstrations fine-tune SmolVLA, and the VLA is then improved with reinforcement learning on its own
+          rollouts.
+          <br><br>
+          Two choices shaped everything. First, <strong>the VLA outputs a hand pose in the table frame, not
+          joint angles.</strong> The robot stands on its own legs and its pelvis sways several centimetres
+          whenever the arm moves, so a joint-space action means something different depending on how the body
+          has drifted; a grasp-centre pose means the same thing always, and IK from the current torso pose turns
+          it into joints. Second, <strong>the block is held by contact and friction only</strong> — no welds, no
+          attachment constraints. That makes the grasp a real physical event that can fail, and most of the
+          remaining failures are exactly that.
+          <br><br>
+          <strong>The VLA is never told where the block is.</strong> It has to find it in the camera images.
+        </div>
+
+        <figure class="intro-aside">
+          <video src="assets/videos/humanoid-vla/intro-clip.mp4" poster="assets/images/humanoid-vla/poster-intro-clip.jpg"
+                 autoplay loop muted playsinline aria-label="The final RL-tuned VLA picking up the block and placing it on the star"></video>
+          <figcaption><b>The final model.</b> After RL, driving the arm and hand on its own. Head and wrist
+            views are further down.</figcaption>
+        </figure>
       </div>
 
       <div class="featured-tech">
