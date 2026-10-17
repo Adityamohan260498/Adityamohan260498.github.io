@@ -12,12 +12,12 @@
       <div class="wip-banner">
         <span class="wip-tag">In progress</span>
         <div class="wip-text">
-          <b>Working today:</b> a velocity policy trained under a system-identification randomisation
-          curriculum, exported to ONNX and <b>running on the physical 29-DoF Unitree G1</b> at 50 Hz over
-          CycloneDDS — remote-stick teleop, keyboard teleop and scripted distance sequences all driving the
-          real machine. <b>Being built now:</b> RGB-D mapping from the robot's D435i head camera through
-          RTAB-Map, and a retrain to fix the deadband and turn-in-place limits measured on hardware.
-          Every number below is from my own run or my own robot.
+          <b>Working today:</b> a velocity policy trained under a measured system-ID randomisation curriculum,
+          exported to ONNX and <b>walking on the physical 29-DoF Unitree G1</b> at 50 Hz over CycloneDDS.
+          Five policies trained, three taken to hardware, one that walks. Also validated sim-to-sim in
+          Isaac Sim on PhysX over a 56 m warehouse route. <b>Being built now:</b> RGB-D mapping from the
+          robot's head camera, and a human-gait retrain to fix the shuffling stride both simulators show.
+          Every number below is from my own runs or my own robot.
         </div>
       </div>
 
@@ -56,35 +56,24 @@
 
       <div class="metric-row">
         <div class="metric">
-          <div class="metric-num">29<small> DoF</small></div>
-          <div class="metric-label">real Unitree G1 driven at 50 Hz from a 96-dim observation, policy in ONNX</div>
+          <div class="metric-num">0.58<small> m/s</small></div>
+          <div class="metric-label">sustained walking speed on the real G1 — the transfer that worked, of three tried</div>
         </div>
         <div class="metric">
-          <div class="metric-num">995<small> / 1000</small></div>
-          <div class="metric-label">mean episode length under randomised physics — 0.04 fall terminations</div>
+          <div class="metric-num">&minus;31<small>%</small></div>
+          <div class="metric-label">held-out joint-tracking error after chirp system ID on 12 leg joints</div>
         </div>
         <div class="metric">
-          <div class="metric-num">2.1<small>×</small></div>
-          <div class="metric-label">widening of the joint-friction randomisation band over the curriculum</div>
+          <div class="metric-num">3e&minus;6</div>
+          <div class="metric-label">parity between the deploy runtime and training, checked before touching hardware</div>
         </div>
         <div class="metric">
-          <div class="metric-num">&plusmn;0.3<small> m</small></div>
-          <div class="metric-label">open-loop distance accuracy on a scripted 2 m / 1 m / 0.5 m sequence</div>
+          <div class="metric-num">56<small> m</small></div>
+          <div class="metric-label">Isaac Sim warehouse route on PhysX, two aisles and a box slalom, no fall</div>
         </div>
       </div>
 
-      <!-- SIM vs REAL ══════════════════════════════════════════════════════
-           PLACEHOLDER: both panels currently play the SAME simulation clip
-           (assets/videos/g1/distance-sequence-sim.mp4, duplicated as
-           distance-sequence-real.mp4) so the side-by-side layout can be
-           reviewed before the hardware footage exists.
-
-           TO SWAP IN THE REAL FOOTAGE:
-             1. drop the clip at  ~/g1/run_policy/videos/
-             2. re-encode it over  assets/videos/g1/distance-sequence-real.mp4
-             3. regenerate  assets/images/g1/poster-distance-real.jpg
-             4. delete the "[Placeholder ...]" sentence in the caption below
-           ═══════════════════════════════════════════════════════════════ -->
+      <!-- SIM vs REAL — same policy, same command schedule, same durations -->
       <div class="video-grid">
         <figure>
           <video src="assets/videos/g1/distance-sequence-sim.mp4" poster="assets/images/g1/poster-distance-sim.jpg"
@@ -97,10 +86,10 @@
         <figure>
           <video src="assets/videos/g1/distance-sequence-real.mp4" poster="assets/images/g1/poster-distance-real.jpg"
                  autoplay loop muted playsinline controls preload="metadata"></video>
-          <figcaption><b>Real robot.</b> The same ONNX policy and the same schedule, executed on the physical
-            G1 over CycloneDDS. Timings are open loop — there is no position feedback, so the distances come
-            from durations measured in the run on the left.
-            <b>[Placeholder: currently showing the simulation clip until the hardware footage is recorded.]</b></figcaption>
+          <figcaption><b>Real robot.</b> The same ONNX policy and the same schedule, on the physical G1 over
+            CycloneDDS, recorded the same afternoon as the run on the left. The gantry strap is slack — it is
+            a fall-arrest, not a support. Timings are open loop: there is no position feedback anywhere in
+            this stack, so the distances come from durations calibrated in simulation.</figcaption>
         </figure>
       </div>
 
@@ -183,6 +172,90 @@
         </div>
       </div>
 
+      <!-- POLICY LEDGER -->
+      <div class="results-section">
+        <div class="results-title">Five Policies, Three Taken to Hardware, One That Walks</div>
+        <div class="results-subtitle">Keeping the failures in the ledger is the point — the difference between the one that walks and the ones that froze is the whole result.</div>
+        <table class="results-table">
+          <thead>
+            <tr><th>Policy</th><th>Obs</th><th>What changed</th><th>On hardware</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>#1 velocity</td><td>99</td><td>baseline; base linear velocity in the actor</td><td>froze on the ground</td></tr>
+            <tr><td>#2 no-BLV</td><td>96</td><td>velocity moved to the critic; hand-tuned randomisation</td><td>never run — yaw 57% worse</td></tr>
+            <tr class="chosen"><td>#3 sysID</td><td>96</td><td>randomisation from <em>measured</em> parameters</td><td><span class="sel">◆ walks · 0.578 m/s</span></td></tr>
+            <tr><td>#4 payload</td><td>474</td><td>5-frame history, height command, 0–15 kg payload, pushes</td><td>froze on the ground</td></tr>
+            <tr><td>#3b turn</td><td>96</td><td>#3 fine-tuned 6k iters on turn-in-place</td><td>not yet — turn 0.32 → 0.54 rad/s</td></tr>
+          </tbody>
+        </table>
+        <div class="results-note">
+          <strong>Diagnosing the freeze mattered more than fixing it.</strong> On the policies that stalled,
+          torque <em>was</em> being delivered — commanded and estimated torque agreed to within a few percent.
+          The ankle pitch joint was binding at about 0.45 rad of error at 13 N·m with zero velocity, while
+          hips and knees tracked fine. Since #3 walks on the same hardware with the same ankle linkage, the
+          cause is not a modelling error in the ankle's four-bar approximation — it is that #1 and #4 learned
+          gaits that lean on ankle authority the real actuator does not have. The MJCF had zero joint friction
+          and damping, so in simulation that authority was free.
+        </div>
+      </div>
+
+      <!-- SYSTEM ID -->
+      <div class="results-section">
+        <div class="results-title">System ID · Measuring the Robot Instead of Guessing Its Randomisation Ranges</div>
+        <div class="results-subtitle">Chirp excitation on all 12 leg joints with the robot hoisted and its feet clear of the floor; pelvis welded, collisions off, legs only. Fitted on two sweeps, validated on two held out.</div>
+        <table class="results-table">
+          <thead>
+            <tr><th>Model</th><th>Held-out sweep</th><th>Open-loop RMSE</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Nominal MJCF</td><td>chirp_0</td><td>0.0365 rad</td><td>as shipped</td></tr>
+            <tr class="chosen"><td>Identified</td><td>chirp_0</td><td><span class="sel">◆ 0.0251 rad</span></td><td>&minus;31%</td></tr>
+            <tr><td>Identified</td><td>chirp at different kp</td><td>0.0246 rad</td><td>generalises off the fitted gains</td></tr>
+            <tr><td colspan="2">Run-to-run repeatability floor</td><td>0.0051 rad</td><td>the best any model could do</td></tr>
+          </tbody>
+        </table>
+        <div class="results-note">
+          Armature, damping and friction were fitted per joint, then the randomisation range for each was
+          scaled by <em>how identifiable that parameter actually was</em> — wide where the fit was uncertain,
+          tight where it was well constrained. That is the only substantive difference between policy #2 and
+          policy #3, and it is the difference between a robot that freezes and one that walks.
+          <br><br>
+          <strong>What this does not cover:</strong> the sweeps were run with no ground contact, no body load
+          and no base motion. The identified numbers describe a hoisted leg, not a walking one.
+        </div>
+      </div>
+
+      <!-- SIM2SIM -->
+      <div class="spec-block">
+        <div class="block-title">Two Checks Before Any Policy Touches the Robot</div>
+        <div class="block-sub">A humanoid that fails on hardware can damage itself. Both of these are cheap and catch different classes of error.</div>
+        <div class="findings">
+          <div class="finding"><span class="finding-n">01</span><span>
+            <b>A parity harness, down to 3e&minus;6.</b> The deployment runtime rebuilds the observation
+            vector from scratch out of raw sensor packets, with its own joint ordering, scaling and history
+            buffers. The harness feeds identical states through both the training environment and the ONNX
+            deploy path and asserts the observations and actions agree to 3e&minus;6. A silently permuted
+            joint index produces a policy that looks fine in simulation and falls over immediately — and is
+            invisible to any test that only checks shapes.
+          </span></div>
+          <div class="finding"><span class="finding-n">02</span><span>
+            <b>Sim-to-sim in a different physics engine.</b> The exact MJCF is converted to USD and the same
+            ONNX policy is run in Isaac Sim 5.0 on PhysX — a completely independent contact solver. Policy #3
+            completed a <em>56 m warehouse route</em> through two aisles, a box slalom and two 90° turns with
+            no fall. Agreement across two engines is much weaker evidence than hardware, but it is far
+            stronger than one simulator agreeing with itself, and it costs no robot time.
+          </span></div>
+          <div class="finding"><span class="finding-n">03</span><span>
+            <b>Both simulators then agreed on something I had not been looking for.</b> Every policy steps at
+            3.2–4.4 steps/s with 13–18 cm strides. A human walks at roughly 1.7 steps/s with 37 cm strides.
+            The policies are not walking, they are shuffling — fast, stable and visibly wrong, with 45–50°/s
+            RMS of head shake that would wreck any head-mounted camera. It is policy-intrinsic: the air-time
+            and soft-landing rewards are weighted zero and there is no gait clock. A reward that only asks for
+            velocity tracking and not falling gets exactly this.
+          </span></div>
+        </div>
+      </div>
+
       <!-- LIMITS -->
       <div class="results-section">
         <div class="results-title">What the Hardware Says the Policy Cannot Do</div>
@@ -207,10 +280,12 @@
           trained on, and whether it complies depends on the pose it happens to be in. The teleop scripts cap
           yaw at 1.2 rad/s precisely because pushing further is not more reliable, just faster when it works.
           <br><br>
-          <strong>The fix is in training, not in the controller:</strong> give the foot air-time reward a
-          positive weight and drop its command threshold from 0.5 to ~0.1 so slow stepping pays, and add
-          command environments with zero linear velocity and non-zero yaw so turning in place is something the
-          policy has actually seen. Tuning the deadband out at the teleop layer would only hide it.
+          <strong>The fix belonged in training, not in the controller.</strong> Tuning the deadband out at
+          the teleop layer would only have hidden it. Fine-tuning #3 for 6 000 iterations with 30% of
+          environments on turn-in-place commands took yaw rate from 0.32 to <strong>0.54 rad/s</strong> and
+          walking from 0.578 to 0.625 m/s — and Isaac Sim confirms it turns in place on PhysX too, at
+          1.03 rad/s one way and 0.57 the other, so the asymmetry has not gone, only shrunk. That policy has
+          not been put on the robot yet.
         </div>
       </div>
 
@@ -257,20 +332,27 @@
       <!-- NEXT -->
       <div class="spec-block">
         <div class="block-title">Where This Is Going</div>
-        <div class="block-sub">Two threads, in order.</div>
+        <div class="block-sub">Three threads, in rough order of how much they would change the result.</div>
         <div class="findings">
           <div class="finding"><span class="finding-n">01</span><span>
-            <b>Retrain to close the deadband and learn in-place turning.</b> Positive foot air-time weight
-            with a much lower command threshold, plus turn-only command environments. Both failures traced
-            back to the command distribution rather than to the architecture, so this is a training-config
-            change, not a redesign.
+            <b>Retrain for a human gait.</b> Both simulators agree the policies shuffle — 3.2–4.4 steps/s at
+            13–18 cm against a human's 1.7 steps/s at 37 cm. The levers are known and all in the reward:
+            air time and soft landing currently carry zero weight, and there is no gait clock at all. This is
+            the change that would most alter how the robot actually looks and how usable its head camera is.
           </span></div>
           <div class="finding"><span class="finding-n">02</span><span>
-            <b>RGB-D mapping from the robot's own head camera.</b> The D435i on the G1 into RTAB-Map over
-            ROS 2, recorded to a bag during a scripted walk and replayed offline so the map is built from the
-            robot's real trajectory. Once there is a map, the open-loop distance schedule can be replaced by
-            something that actually knows where the robot is — which is the point at which the waypoint layer
-            stops being dead reckoning.
+            <b>Put the turn fine-tune on hardware.</b> It is trained and validated in two simulators; only
+            the gantry session is outstanding. The payload policy needs a separate look — it carries 10 kg
+            and crouches to 0.52 m in simulation but froze on the ground, and it is the same ankle-authority
+            story as #1.
+          </span></div>
+          <div class="finding"><span class="finding-n">03</span><span>
+            <b>RGB-D mapping from the robot's own head camera.</b> The D435i into RTAB-Map over ROS 2,
+            recorded to a bag during a scripted walk and replayed offline so the map is built from the robot's
+            real trajectory. Once there is a map, the open-loop distance schedule can be replaced by something
+            that knows where the robot is — the point at which this stops being dead reckoning. The shuffling
+            gait's 45–50°/s of head shake is a direct problem for this, which is why the gait retrain comes
+            first.
           </span></div>
         </div>
       </div>

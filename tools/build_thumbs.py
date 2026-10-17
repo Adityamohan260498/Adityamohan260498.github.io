@@ -24,6 +24,12 @@ BOX = (620, 300)     # crop box — cards show a 2.07:1 letterbox band
 
 # slug -> ordered list of source images (repo-relative)
 THUMBS = {
+    "humanoid-vla": [
+        "assets/images/humanoid-vla/card-1.jpg",
+        "assets/images/humanoid-vla/card-2.jpg",
+        "assets/images/humanoid-vla/card-3.jpg",
+        "assets/images/humanoid-vla/card-4.jpg",
+    ],
     "g1-locomotion": [
         "assets/images/g1/seq-1.jpg",
         "assets/images/g1/seq-2.jpg",

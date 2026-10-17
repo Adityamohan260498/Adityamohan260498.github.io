@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<!-- GENERATED FILE: do not edit directly.
+     Source: content/humanoid-vla.frag   Rebuild: python tools/build_project_pages.py -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>An RL-Fine-Tuned VLA for Humanoid Manipulation, From My Own Phone Videos · Unni Aditya Mohan</title>
+  <meta name="description" content="A Unitree G1 with a Dex3-1 hand learning pick-and-place from 26 egocentric phone clips: MediaPipe hand tracking retargeted into MuJoCo demonstrations, a SmolVLA fine-tune improved by advantage-weighted RL on its own rollouts, reaching 52% on 60 unseen poses from cameras alone with zero falls.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css?v=6">
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════ NAV ════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">ADITYA<span>.</span></a>
+    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════ BACK BAR ════════════════════════════════════════════ -->
+<div class="backbar">
+  <div class="backbar-inner">
+    <a class="back-link" href="../index.html#p-humanoid-vla"><span>←</span> All projects</a>
+    <span class="backbar-title">An RL-Fine-Tuned VLA for Humanoid Manipulation, From My Own Phone Videos</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ PROJECT ════════════════════════════════════════════ -->
+<section id="projects" class="project-detail">
+  <div class="section-inner">
+
+    <!-- ──── FEATURED: RL-Fine-Tuned VLA for Humanoid Manipulation ──── -->
+    <div class="featured-project reveal">
+      <div class="featured-header">
+        <div>
+          <div class="featured-label">In Progress · Vision-Language-Action &amp; Imitation Learning</div>
+          <div class="featured-title">An RL-Fine-Tuned VLA for Humanoid Manipulation, From My Own Phone Videos</div>
+          <div class="featured-subtitle">Open challenge submission · Unitree G1 + Dex3-1 in MuJoCo · SmolVLA · MediaPipe · models published on Hugging Face</div>
+        </div>
+        <div class="featured-date">Oct 2026</div>
+      </div>
+
+      <div class="wip-banner">
+        <span class="wip-tag">In progress</span>
+        <div class="wip-text">
+          <b>Done:</b> 26 phone clips of my own hand retargeted onto a G1 with a three-fingered hand, 584 demos,
+          a SmolVLA fine-tune improved by RL on its own rollouts, and an evaluation at <b>52% on 60 unseen
+          block poses from cameras alone, with 0 falls</b> — benchmarked against a motion-planner pipeline at
+          73%. <b>Next:</b> correction data at the grasp, which is where the remaining failures are.
+        </div>
+      </div>
+
+      <div class="featured-desc">
+        The brief was that <strong>my own data has to drive the robot</strong>. So I filmed myself 26 times
+        picking up a block and standing it on a star, tracked my hand with MediaPipe, and turned
+        <em>my hand's path</em> — where it goes, how it turns, when it closes and opens, and how fast — into
+        motion for a Unitree G1 with a Dex3-1 hand in MuJoCo. Those replays become demonstrations, the
+        demonstrations fine-tune SmolVLA, and the VLA is then improved with reinforcement learning on its own
+        rollouts.
+        <br><br>
+        Two choices shaped everything. First, <strong>the VLA outputs a hand pose in the table frame, not
+        joint angles.</strong> The robot stands on its own legs and its pelvis sways several centimetres
+        whenever the arm moves, so a joint-space action means something different depending on how the body
+        has drifted; a grasp-centre pose means the same thing always, and IK from the current torso pose turns
+        it into joints. Second, <strong>the block is held by contact and friction only</strong> — no welds, no
+        attachment constraints. That makes the grasp a real physical event that can fail, and most of the
+        remaining failures are exactly that.
+        <br><br>
+        <strong>The VLA is never told where the block is.</strong> It has to find it in the camera images.
+      </div>
+
+      <div class="featured-tech">
+        <span class="skill-tag">SmolVLA / LeRobot</span>
+        <span class="skill-tag">Vision-Language-Action</span>
+        <span class="skill-tag">Imitation Learning</span>
+        <span class="skill-tag">Advantage-Weighted RL</span>
+        <span class="skill-tag">MediaPipe Hand Tracking</span>
+        <span class="skill-tag">MuJoCo</span>
+        <span class="skill-tag">Dexterous Grasping</span>
+        <span class="skill-tag">Camera Calibration</span>
+        <span class="skill-tag">PyTorch</span>
+      </div>
+
+      <div class="metric-row">
+        <div class="metric">
+          <div class="metric-num">52<small>%</small></div>
+          <div class="metric-label">success on 60 unseen block poses, from cameras only, up from 37% at BC</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">54<small>%</small></div>
+          <div class="metric-label">of training frames are my own recorded hand motion, not a planner's</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">0<small> falls</small></div>
+          <div class="metric-label">across 3 × 60 evaluation episodes — the legs are an RL policy of mine too</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">1.1<small> cm</small></div>
+          <div class="metric-label">feet never moved more than this across 66 workspace probe points</div>
+        </div>
+      </div>
+
+      <!-- THE SYSTEM RUNNING -->
+      <div class="video-grid">
+        <figure>
+          <video src="../assets/videos/humanoid-vla/hand-to-robot.mp4" poster="../assets/images/humanoid-vla/poster-hand-to-robot.jpg"
+                 autoplay loop muted playsinline controls preload="metadata"></video>
+          <figcaption><b>My clip, then the robot.</b> Left: one of my phone videos with the tracked hand, the
+            pinch point in red and the grip/yaw readout. Right: the G1 and Dex3 replaying that same clip in
+            physics. The panels run at different speeds because the robot plays my motion roughly 2× slower
+            and pauses to close its fingers.</figcaption>
+        </figure>
+        <figure>
+          <video src="../assets/videos/humanoid-vla/final-demo.mp4" poster="../assets/images/humanoid-vla/poster-final-demo.jpg"
+                 autoplay loop muted playsinline controls preload="metadata"></video>
+          <figcaption><b>The final model, after RL.</b> Front view, head camera and wrist camera. The VLA alone
+            drives the arm and hand, my RL leg policy keeps the robot standing, and the block is held by finger
+            contact and friction — nothing is welded to the hand.</figcaption>
+        </figure>
+      </div>
+
+      <!-- SETUP -->
+      <div class="spec-block">
+        <div class="block-title">Setup</div>
+        <div class="block-sub">A humanoid at a table is not a fixed-base arm. Every arm motion pushes the body, so the legs are part of the manipulation problem.</div>
+        <div class="spec-grid">
+          <div class="spec-item">
+            <div class="spec-key">Robot</div>
+            <div class="spec-val">Unitree G1, 29 DoF with a full floating base, in MuJoCo 3.15. Unitree Dex3-1 three-fingered hand (7 DoF) on the right arm; the left arm holds its rest pose.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Task &amp; Success</div>
+            <div class="spec-val">Pick up a 3.5 × 3.5 × 8 cm, 80 g standing block and stand it upright on a star. Success requires the block upright within 3 cm, the robot still standing, and no part of the robot except the hand touching the table.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">My Data</div>
+            <div class="spec-val">26 phone clips at 4K/60 fps, filmed at eye level, plus ChArUco calibration video. ArUco markers give the table frame. Camera calibration came out at 1.31 px RMS. <em>18 of the 26 clips</em> yield a usable hand track.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Perception</div>
+            <div class="spec-val">MediaPipe's 21 hand landmarks → the pinch point (thumb-tip / index-tip midpoint) in 3-D, hand yaw, grip aperture, and the grasp / release moments detected from when the block starts and stops moving. Monocular depth from MediaPipe's metric hand model plus PnP, one scale per clip.</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Policy</div>
+            <div class="spec-val">SmolVLA 450M fine-tuned from <em>lerobot/smolvla_base</em>. Inputs: head camera, wrist camera, the hand state, and the text instruction. Output: chunks of 5-D hand-pose actions, re-planned every 5 steps (0.2 s).</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">Compute</div>
+            <div class="spec-val">One 8 GB RTX 4060 laptop GPU for everything — the leg policy, every SmolVLA fine-tune and every RL round.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEGS -->
+      <div class="spec-block">
+        <div class="block-title">The Legs Are Their Own RL Problem</div>
+        <div class="block-sub">Before any manipulation can be learned, the robot has to hold still while something else moves its arms.</div>
+        <div class="findings">
+          <div class="finding"><span class="finding-n">01</span><span>
+            <b>A stance policy trained to be disturbed by its own arms.</b> PPO in mjlab across 4096 parallel
+            environments, with stand-only commands, table-work postures, and <em>random arm motions</em>
+            injected during training — 70% of the right arm's reach goals being palm-in grasp poses like the
+            ones the task actually needs. Rewards weight standing-still terms heavily. The leg policy also
+            <em>sees the arm targets</em>, so it can anticipate the push rather than only react to it.
+          </span></div>
+          <div class="finding"><span class="finding-n">02</span><span>
+            <b>Measured, not assumed: the workspace is limited by the arm, not by balance.</b> I moved the
+            grasp centre to every point of a 5 cm grid on the table and held it for 3 s.
+            Across all 66 points the <em>feet never moved more than 1.1 cm and the robot never fell</em>.
+            What changes across the grid is how much the pelvis sways to counterbalance — which is precisely
+            why the actions are hand poses in the table frame rather than joint angles.
+          </span></div>
+          <div class="finding"><span class="finding-n">03</span><span>
+            <b>A physics bug found by measuring a grip that should have held.</b> With MuJoCo's default
+            pyramidal friction cone a block slowly crept out of a 76 N grip. Switching to the elliptic cone
+            with impratio 10 and a 5 ms step fixed it. Had I not checked, every grasp failure afterwards would
+            have been blamed on the policy.
+          </span></div>
+        </div>
+      </div>
+
+      <!-- ITERATIONS -->
+      <div class="results-section">
+        <div class="results-title">Every Iteration, on the Same 60 Unseen Block Poses</div>
+        <div class="results-subtitle">Seed 123 throughout. A model is kept only if it beats its parent on the full 60-pose evaluation, otherwise it is rolled back.</div>
+        <table class="results-table">
+          <thead>
+            <tr><th>#</th><th>Model</th><th>Cameras</th><th>Success</th><th>Lifted</th><th>Kept?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>BC v0 · 302 demos</td><td>head</td><td>0%</td><td>6%</td><td>no — action-interface bug</td></tr>
+            <tr><td>2</td><td>BC v1 · 572 demos</td><td>head</td><td>37%</td><td>52%</td><td>yes, baseline</td></tr>
+            <tr><td>3</td><td>RL it1 · +120 rollouts</td><td>head</td><td>tie</td><td>50%</td><td>rolled back</td></tr>
+            <tr class="chosen"><td>4</td><td>RL it2 · +240 rollouts</td><td>head</td><td><span class="sel">◆ 45%</span></td><td>55%</td><td>yes — final head-only</td></tr>
+            <tr><td>5</td><td>RL it3 · +240 more</td><td>head</td><td>38%</td><td>58%</td><td>rolled back</td></tr>
+            <tr><td>6</td><td>AWR on all 1151 demos</td><td>head</td><td>42%</td><td>53%</td><td>no</td></tr>
+            <tr><td>7</td><td>Wrist BC · 584 demos</td><td>head + wrist</td><td>43%</td><td>58%</td><td>yes, new branch</td></tr>
+            <tr class="chosen"><td>8</td><td>Wrist RL it11 · +60 rollouts</td><td>head + wrist</td><td><span class="sel">◆ 52%</span></td><td>67%</td><td>yes — final</td></tr>
+          </tbody>
+        </table>
+        <div class="results-note">
+          n = 60 gives roughly ±6% at one standard deviation, so each ~8-point gain is about 1.3 SD — real,
+          but not large. Being explicit about that is the point of re-running all 60 poses every time rather
+          than reporting the best few. <strong>Three of five RL rounds were rolled back</strong>, which is
+          what the keep-only-if-it-beats-its-parent rule is for.
+        </div>
+      </div>
+
+      <!-- WRIST CAMERA -->
+      <div class="results-section">
+        <div class="results-title">Why a Wrist Camera · Measuring <em>Where</em> the Policy Fails</div>
+        <div class="results-subtitle">After three RL rounds plateaued, I stopped tuning and measured the error at the moment the fingers close. 198 rollouts.</div>
+        <table class="results-table">
+          <thead>
+            <tr><th>Grasp-centre error when the grip closes</th><th>Rollouts</th><th>Lifted</th></tr>
+          </thead>
+          <tbody>
+            <tr class="chosen"><td>&lt; 1 cm</td><td>26</td><td><span class="sel">◆ 81%</span></td></tr>
+            <tr><td>1–2 cm</td><td>44</td><td>66%</td></tr>
+            <tr><td>2–4 cm</td><td>86</td><td>43%</td></tr>
+          </tbody>
+        </table>
+        <div class="results-note">
+          That is the whole story in one table: the policy is not failing to understand the task, it is failing
+          to place its fingers. In the 224 px head image the block is about <em>14 px wide</em> — 1 cm is
+          roughly 4 px — and the hand covers half of it at exactly the moment precision matters.
+          <strong>RL can only re-weight what the policy can see</strong>, so no amount of further RL on the
+          head camera was going to fix this. Adding a wrist camera took lift from 55% to 67% and success from
+          45% to 52%.
+        </div>
+      </div>
+
+      <!-- COMPARISON -->
+      <div class="results-section">
+        <div class="results-title">Against a Motion-Planner Benchmark</div>
+        <div class="results-subtitle">Same robot, same legs, same scene, same SmolVLA — only the source of the demonstration motion differs. Both evaluations draw poses from the same generator and seed.</div>
+        <table class="results-table">
+          <thead>
+            <tr><th></th><th>Mine · head + wrist</th><th>Mine · head only</th><th>Planner/IK benchmark</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Arm motion in demos comes from</td><td><strong>me</strong> (54% of frames)</td><td><strong>me</strong></td><td>RRT-Connect + IK</td></tr>
+            <tr><td>Action space</td><td>grasp-centre pose</td><td>grasp-centre pose</td><td>14 joint angles</td></tr>
+            <tr><td>Success, same 30 poses</td><td>47%</td><td>40%</td><td><strong>73%</strong></td></tr>
+            <tr><td>Success, 60 poses</td><td><strong>52%</strong></td><td>45%</td><td>n/a</td></tr>
+            <tr><td>Lifted</td><td>67%</td><td>55%</td><td>90%</td></tr>
+            <tr><td>Falls</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>Main failure mode</td><td>grasp precision</td><td>grasp precision</td><td>extreme block yaw</td></tr>
+          </tbody>
+        </table>
+        <div class="results-note">
+          <strong>The benchmark wins by about 25 points, and I am reporting it that way deliberately.</strong>
+          A motion planner produces perfectly consistent demonstrations; my own hand varies from clip to clip
+          and is noisier, and that noise costs real performance. But the planner version does not meet the
+          brief — its arm motion is not mine. Keeping both, on identical poses, is what makes the cost of the
+          constraint measurable instead of a matter of opinion.
+        </div>
+      </div>
+
+      <div class="video-grid">
+        <figure>
+          <video src="../assets/videos/humanoid-vla/hand-track.mp4" poster="../assets/images/humanoid-vla/poster-hand-track.jpg"
+                 loop muted playsinline controls preload="none"></video>
+          <figcaption><b>Hand tracking.</b> MediaPipe landmarks, the pinch point in red, and a live readout of
+            grip aperture, yaw and 3-D position in the table frame. The ArUco markers fix that frame; the
+            grasp and release times come from when the block starts and stops moving.</figcaption>
+        </figure>
+        <figure>
+          <video src="../assets/videos/humanoid-vla/benchmark-eval.mp4" poster="../assets/images/humanoid-vla/poster-benchmark-eval.jpg"
+                 loop muted playsinline controls preload="none"></video>
+          <figcaption><b>The planner benchmark.</b> 466 demos from RRT-Connect plus closed-loop IK, re-solved
+            every step from the current torso pose because the body sways about 9 cm. 73% success, and the
+            reference point everything else is measured against.</figcaption>
+        </figure>
+      </div>
+
+      <!-- RL METHOD -->
+      <div class="spec-block">
+        <div class="block-title">How the RL Works</div>
+        <div class="block-sub">SmolVLA is a flow-matching policy, so ordinary policy gradients are the wrong tool.</div>
+        <div class="findings">
+          <div class="finding"><span class="finding-n">01</span><span>
+            <b>Advantage-weighted resampling, not policy gradient.</b> Following Larchenko et al.'s
+            <em>Learning to Fold</em>: a policy-gradient update pushes the action chunk off the narrow
+            manifold of valid actions, whereas re-weighting the <em>data sampler</em> only changes how often
+            the policy sees actions it already produces. The loss stays plain flow matching and the LeRobot
+            training loop is untouched.
+          </span></div>
+          <div class="finding"><span class="finding-n">02</span><span>
+            <b>An empirical stage value instead of a learned critic.</b> Every rollout frame is labelled with
+            a privileged progress stage — hand at the grasp point, lifted, over the star, placed. The value of
+            stage <em>k</em> is simply P(success | reached <em>k</em>), measured from the rollouts, and a
+            frame's advantage is the step up it achieved. Frames are then sampled ∝ exp(A). On one laptop GPU
+            that is far cheaper than training a value network, and there is nothing to diverge.
+          </span></div>
+          <div class="finding"><span class="finding-n">03</span><span>
+            <b>Extra negative credit for the second before the block topples.</b> Knocking the block over is
+            the failure that a success-only signal notices far too late.
+          </span></div>
+        </div>
+      </div>
+
+      <!-- WHAT FAILED -->
+      <div class="spec-block">
+        <div class="block-title">What Did Not Work</div>
+        <div class="block-sub">Reported because each one changed the design, and because a result with no failures listed is usually a result that was not examined.</div>
+        <div class="findings">
+          <div class="finding"><span class="finding-n">01</span><span>
+            <b>The first demo set succeeded only 34% of the time in simulation.</b> Traced step by step: the
+            0.6× scaled carry lifted the block only 0.5–3 cm, fast approaches knocked it over, and the hand
+            oscillated above the star. Adding a straight 14 cm descent with a pause to close, and a settle
+            before release, raised it to 64%. <em>A stronger squeeze made it worse</em>, which is the opposite
+            of the obvious fix.
+          </span></div>
+          <div class="finding"><span class="finding-n">02</span><span>
+            <b>BC v0 scoring 0% was a bug, not a learning failure.</b> The planned segments stored the
+            planner's <em>final goal</em> as the action. Replaying known-good demos through the evaluation
+            controller also gave 0/6 — which is what proved it was the interface and not the model, and is a
+            much faster check than retraining.
+          </span></div>
+          <div class="finding"><span class="finding-n">03</span><span>
+            <b>Doubling the demonstrations did nothing.</b> 572 → 1151 head-camera demos moved success from
+            45% to 42%. More of the same data does not fix a perception limit.
+          </span></div>
+          <div class="finding"><span class="finding-n">04</span><span>
+            <b>The wrist camera alone did not help at first</b> (43%). My demonstrations never show a
+            <em>correction</em> — "the hand is 3 cm off, move it" — because the scripted grasp uses the true
+            block pose and so is never wrong. The camera only paid off once RL had rollouts to re-weight.
+            That is what points at DAgger-style correction data as the next step rather than more RL.
+          </span></div>
+          <div class="finding"><span class="finding-n">05</span><span>
+            <b>Blocks lying on their side are not handled.</b> 10 of my 26 clips show this; the Dex3 would
+            need an arm pose extreme enough to make the legs step.
+          </span></div>
+        </div>
+      </div>
+
+      <!-- NEXT -->
+      <div class="spec-block">
+        <div class="block-title">Next Steps</div>
+        <div class="block-sub">All aimed at the grasp, and at making more of each demonstration come from me rather than from a script.</div>
+        <div class="findings">
+          <div class="finding"><span class="finding-n">01</span><span>
+            <b>Record recoveries.</b> Clips where the block slips from my hand and I pick it up again,
+            retargeted through the whole recovery, so the VLA sees how a bad grasp gets corrected instead of
+            only clean ones.
+          </span></div>
+          <div class="finding"><span class="finding-n">02</span><span>
+            <b>A wrist camera on my own hand while filming.</b> The robot's wrist camera gave the single
+            biggest gain; a matching view in the human data would supply it from my recordings rather than
+            only from simulation.
+          </span></div>
+          <div class="finding"><span class="finding-n">03</span><span>
+            <b>Replace the scripted grasp and place with my own motion.</b> With the two above, my motion can
+            cover the last 14 cm and the placement too — taking the demonstrations from 54% mine to 100% mine.
+            IK stays, because it only converts a hand pose into joint angles.
+          </span></div>
+        </div>
+      </div>
+
+      <!-- ATTRIBUTION -->
+      <div class="credit-bar">
+        <div class="credit mine">
+          <div class="credit-who">My contribution</div>
+          <div class="credit-what">
+            All of it: filming and calibrating the 26 clips, the MediaPipe hand-tracking and monocular-depth
+            pipeline, the retargeting from my pinch path to the robot's grasp centre, the MuJoCo scene and
+            contact tuning, the RL stance policy for legs and waist, the workspace characterisation, the
+            SmolVLA fine-tunes, the advantage-weighted RL loop with its empirical stage values, the planner/IK
+            benchmark, and the evaluation harness.
+          </div>
+        </div>
+        <div class="credit">
+          <div class="credit-who">Upstream</div>
+          <div class="credit-what">
+            SmolVLA and LeRobot (Hugging Face); <em>mjlab</em> for the leg-policy training; MuJoCo Menagerie
+            for the G1 and Dex3-1 models; MediaPipe for hand landmarks. The AWR-through-the-sampler idea is
+            from Larchenko et al., <em>Learning to Fold</em> (arXiv 2606.27163); I reimplemented the sampler
+            and substituted an empirical stage value for their learned one.
+          </div>
+        </div>
+      </div>
+
+      <div class="project-actions">
+        <a href="https://huggingface.co/adityamohan2604/g1-smolvla-attempt1-wrist" class="project-link" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/></svg>
+          Final model (head + wrist)
+        </a>
+        <a href="https://huggingface.co/adityamohan2604/g1-smolvla-attempt1-head" class="project-link" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/></svg>
+          Head-only model
+        </a>
+        <a href="https://huggingface.co/adityamohan2604/g1-smolvla-attempt2-ik-demos" class="project-link" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/></svg>
+          Planner benchmark model
+        </a>
+      </div>
+    </div>
+
+    <nav class="page-nav" aria-label="Project navigation">
+      <a href="../index.html#projects">← All projects</a>
+      <a href="g1-locomotion.html">Unitree G1 · RL Locomotion from Simulation onto the Real Robot →</a>
+    </nav>
+
+  </div>
+</section>
+
+<footer>
+  <p>Designed &amp; built by Unni Aditya Mohan · © 2026</p>
+</footer>
+
+<script src="../assets/js/main.js?v=6"></script>
+</body>
+</html>

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/main.css?v=5">
+  <link rel="stylesheet" href="assets/css/main.css?v=6">
 </head>
 <body>
 
@@ -249,6 +249,29 @@
 
         <!-- Cards with a .pc-wip pip are live projects — the detail page carries a
              .wip-banner saying what works today and what is still open. -->
+        <a class="project-card reveal" id="p-humanoid-vla" href="projects/humanoid-vla.html">
+          <div class="pc-preview" data-interval="1000">
+            <img class="active" src="assets/images/thumbs/humanoid-vla/01.jpg" alt="Tracked human hand grasping a block beside the G1 doing the same in MuJoCo">
+            <img data-src="assets/images/thumbs/humanoid-vla/02.jpg" alt="MediaPipe hand track next to the retargeted robot motion">
+            <img data-src="assets/images/thumbs/humanoid-vla/03.jpg" alt="G1 and Dex3-1 hand lifting the block">
+            <img data-src="assets/images/thumbs/humanoid-vla/04.jpg" alt="Hand and robot placing the block on the star">
+            <video data-src="assets/videos/humanoid-vla/card-loop.mp4" loop muted playsinline preload="none"
+                   aria-hidden="true" tabindex="-1"></video>
+            <span class="pc-wip">In progress</span>
+            <span class="pc-hint">Hover to play</span>
+            <div class="pc-dots"><i class="on"></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="pc-body">
+            <div class="pc-type">Vision-Language-Action · SmolVLA / MuJoCo</div>
+            <div class="pc-title">An RL-Fine-Tuned VLA for Humanoid Manipulation, From My Own Phone Videos</div>
+            <div class="pc-desc">
+              26 clips of my own hand, tracked and retargeted onto a G1 with a three-fingered hand. 52% on 60
+              unseen poses from cameras alone, zero falls — and the grasp error that explains the rest.
+            </div>
+            <div class="pc-go">Full writeup <span>→</span></div>
+          </div>
+        </a>
+
         <a class="project-card reveal" id="p-g1-locomotion" href="projects/g1-locomotion.html">
           <div class="pc-preview" data-interval="1000">
             <img class="active" src="assets/images/thumbs/g1-locomotion/01.jpg" alt="Unitree G1 humanoid walking forward in MuJoCo">
@@ -502,7 +525,7 @@
   <p>Designed &amp; built by Unni Aditya Mohan · © 2026</p>
 </footer>
 
-<script src="assets/js/main.js?v=5"></script>
+<script src="assets/js/main.js?v=6"></script>
 
 </body>
 </html>

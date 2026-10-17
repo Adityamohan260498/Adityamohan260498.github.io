@@ -17,6 +17,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # order controls the prev/next chain and matches the card order on index.html
 PAGES = [
+    ("humanoid-vla", "An RL-Fine-Tuned VLA for Humanoid Manipulation, From My Own Phone Videos",
+     "A Unitree G1 with a Dex3-1 hand learning pick-and-place from 26 egocentric phone clips: MediaPipe hand "
+     "tracking retargeted into MuJoCo demonstrations, a SmolVLA fine-tune improved by advantage-weighted RL "
+     "on its own rollouts, reaching 52% on 60 unseen poses from cameras alone with zero falls."),
     ("g1-locomotion", "Unitree G1 · RL Locomotion from Simulation onto the Real Robot",
      "Reinforcement-learning locomotion for a 29-DoF Unitree G1 humanoid, trained in mjlab / MuJoCo Warp "
      "under a system-identification randomisation curriculum and deployed to the physical robot at 50 Hz "
@@ -57,7 +61,7 @@ TEMPLATE = """<!DOCTYPE html>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/main.css?v=5">
+  <link rel="stylesheet" href="../assets/css/main.css?v=6">
 </head>
 <body>
 
@@ -102,7 +106,7 @@ TEMPLATE = """<!DOCTYPE html>
   <p>Designed &amp; built by Unni Aditya Mohan · © 2026</p>
 </footer>
 
-<script src="../assets/js/main.js?v=5"></script>
+<script src="../assets/js/main.js?v=6"></script>
 </body>
 </html>
 """
