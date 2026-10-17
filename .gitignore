@@ -6,7 +6,10 @@
 __pycache__/
 *.pyc
 
-# Raw source media dropped in the repo root for conversion. The web-ready
-# versions live under assets/ — keep the originals out of git.
-/20260929_171205_1.mp4
-/Resume_Simulation_Engineer.docx
+# The repo root holds only site files: index.html, README.md, resume.pdf.
+# Raw captures and working documents do not belong here — web-ready media goes
+# under assets/, and source footage stays with the project it came from.
+/*.mp4
+/*.mov
+/*.gif
+/*.docx
